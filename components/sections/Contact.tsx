@@ -75,7 +75,7 @@ export default function Contact() {
     "w-full bg-zinc-100/60 dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800/80 rounded-xl px-4 py-3 text-sm text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-500 dark:placeholder:text-zinc-600 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition-all";
 
   return (
-    <section id="contact" className="py-24 sm:py-32 relative">
+    <section id="contact" className="py-24 sm:py-32 relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[700px] h-64 bg-blue-600/6 rounded-full blur-[120px]" />

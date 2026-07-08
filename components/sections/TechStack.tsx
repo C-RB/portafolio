@@ -45,7 +45,7 @@ export default function TechStack() {
   const { theme } = useTheme();
 
   return (
-    <section id="stack" className="min-h-screen flex items-center py-24 sm:py-32 relative">
+    <section id="stack" className="min-h-screen flex items-center py-24 sm:py-32 relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-blue-600/4 rounded-full blur-[140px]" />
       </div>

@@ -194,7 +194,7 @@ export default function Projects() {
   const { t } = useLanguage();
 
   return (
-    <section id="projects" className="py-24 sm:py-32 relative">
+    <section id="projects" className="py-24 sm:py-32 relative overflow-hidden">
       {/* Subtle bg */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute -left-20 top-1/3 w-72 h-72 bg-blue-600/5 rounded-full blur-[100px]" />
