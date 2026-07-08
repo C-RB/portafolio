@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Send, Github, Linkedin, Mail, MapPin, CheckCircle2 } from "lucide-react";
 import SectionTitle from "@/components/ui/SectionTitle";
 import { useLanguage } from "@/lib/language-context";
+import { useMailto } from "@/lib/use-mailto";
 
 type FormState = {
   name: string;
@@ -15,6 +16,7 @@ type FormState = {
 
 export default function Contact() {
   const { t } = useLanguage();
+  const mailHref = useMailto("c.rojas22", "ufromail.cl");
   const [form, setForm] = useState<FormState>({
     name: "",
     email: "",
@@ -23,6 +25,7 @@ export default function Contact() {
   });
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   const contactLinks = [
     {
@@ -35,15 +38,15 @@ export default function Contact() {
     {
       icon: Linkedin,
       label: t.contact.linkedin,
-      value: t.contact.linkedinPlaceholder,
-      href: "#",
+      value: "camilo-rojas-baeza",
+      href: "https://www.linkedin.com/in/camilo-rojas-baeza-0810ba374/",
       color: "hover:text-blue-600 dark:hover:text-blue-400",
     },
     {
       icon: Mail,
       label: t.contact.email,
-      value: "tu@email.com",
-      href: "mailto:tu@email.com",
+      value: t.contact.emailCta,
+      href: mailHref,
       color: "hover:text-blue-600 dark:hover:text-blue-400",
     },
     {
@@ -61,14 +64,24 @@ export default function Contact() {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    // Simulate sending — replace with your actual send logic
-    setTimeout(() => {
-      setLoading(false);
+    setError(false);
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      if (!res.ok) throw new Error("send failed");
       setSent(true);
-    }, 1200);
+    } catch {
+      setError(true);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const inputClass =
@@ -264,6 +277,9 @@ export default function Contact() {
                       </>
                     )}
                   </motion.button>
+                  {error && (
+                    <p className="text-xs text-rose-500 text-center">{t.contact.sendError}</p>
+                  )}
                 </form>
               )}
             </motion.div>

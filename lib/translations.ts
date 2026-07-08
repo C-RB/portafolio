@@ -56,8 +56,8 @@ export type Dictionary = {
     talkDesc: string;
     github: string;
     linkedin: string;
-    linkedinPlaceholder: string;
     email: string;
+    emailCta: string;
     location: string;
     locationValue: string;
     availableNow: string;
@@ -74,6 +74,7 @@ export type Dictionary = {
     sentTitle: string;
     sentDesc: string;
     sendAnother: string;
+    sendError: string;
   };
 };
 
@@ -152,7 +153,7 @@ export const translations: Record<Lang, Dictionary> = {
         "Prefiero responder rápido. Si tienes algo concreto en mente, escríbeme por cualquiera de estos canales y lo conversamos sin rodeos.",
       github: "GitHub",
       linkedin: "LinkedIn",
-      linkedinPlaceholder: "Tu perfil de LinkedIn",
+      emailCta: "Escríbeme un correo",
       email: "Email",
       location: "Ubicación",
       locationValue: "Chile · Disponible remoto",
@@ -171,6 +172,7 @@ export const translations: Record<Lang, Dictionary> = {
       sentTitle: "¡Mensaje enviado!",
       sentDesc: "Gracias por escribir. Te respondo en menos de 24 horas.",
       sendAnother: "Enviar otro mensaje",
+      sendError: "No se pudo enviar el mensaje. Intenta de nuevo o escríbeme directamente.",
     },
   },
   en: {
@@ -247,7 +249,7 @@ export const translations: Record<Lang, Dictionary> = {
         "I prefer to respond quickly. If you have something specific in mind, reach out through any of these channels and let's talk it through.",
       github: "GitHub",
       linkedin: "LinkedIn",
-      linkedinPlaceholder: "Your LinkedIn profile",
+      emailCta: "Send me an email",
       email: "Email",
       location: "Location",
       locationValue: "Chile · Available remotely",
@@ -266,6 +268,7 @@ export const translations: Record<Lang, Dictionary> = {
       sentTitle: "Message sent!",
       sentDesc: "Thanks for reaching out. I'll reply within 24 hours.",
       sendAnother: "Send another message",
+      sendError: "Couldn't send the message. Please try again or email me directly.",
     },
   },
 };

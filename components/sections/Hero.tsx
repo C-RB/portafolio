@@ -9,6 +9,7 @@ import {
   SiGit, SiTailwindcss,
 } from "react-icons/si";
 import { useLanguage } from "@/lib/language-context";
+import { useMailto } from "@/lib/use-mailto";
 
 const containerVariants: Variants = {
   hidden: {},
@@ -90,6 +91,7 @@ function FloatingOrb({ Icon, color, top, bottom, left, right, delay, duration, y
 
 export default function Hero() {
   const { t } = useLanguage();
+  const mailHref = useMailto("c.rojas22", "ufromail.cl");
   const scrollTo = (id: string) =>
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
@@ -187,7 +189,7 @@ export default function Hero() {
             <Github size={14} /> {t.hero.github}
           </a>
           <a
-            href="#"
+            href="https://www.linkedin.com/in/camilo-rojas-baeza-0810ba374/"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-1.5 text-sm text-zinc-500 dark:text-zinc-600 hover:text-zinc-800 dark:hover:text-zinc-300 transition-colors"
@@ -195,7 +197,7 @@ export default function Hero() {
             <Linkedin size={14} /> {t.hero.linkedin}
           </a>
           <a
-            href="mailto:bruce.cyber14@gmail.com"
+            href={mailHref}
             className="flex items-center gap-1.5 text-sm text-zinc-500 dark:text-zinc-600 hover:text-zinc-800 dark:hover:text-zinc-300 transition-colors"
           >
             <Mail size={14} /> {t.hero.email}
