@@ -17,6 +17,7 @@ export type Dictionary = {
     bio: string;
     ctaProjects: string;
     ctaContact: string;
+    ctaCv: string;
     github: string;
     linkedin: string;
     email: string;
@@ -94,6 +95,7 @@ export const translations: Record<Lang, Dictionary> = {
       bio: "Estudiante de quinto año especializado en desarrollo Full Stack y arquitectura de software. Cuento con experiencia práctica en proyectos reales desde la toma de requerimientos hasta el despliegue en producción.",
       ctaProjects: "Ver proyectos",
       ctaContact: "Contactarme",
+      ctaCv: "Descargar CV",
       github: "GitHub",
       linkedin: "LinkedIn",
       email: "Email",
@@ -190,6 +192,7 @@ export const translations: Record<Lang, Dictionary> = {
       bio: "Fifth-year student specialized in Full Stack development and software architecture. I have hands-on experience in real projects from gathering requirements to production deployment.",
       ctaProjects: "View projects",
       ctaContact: "Contact me",
+      ctaCv: "Download CV",
       github: "GitHub",
       linkedin: "LinkedIn",
       email: "Email",

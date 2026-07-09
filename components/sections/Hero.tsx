@@ -168,14 +168,16 @@ export default function Hero() {
           >
             {t.hero.ctaProjects} <ArrowDown size={13} />
           </motion.button>
-          <motion.button
-            onClick={() => scrollTo("contact")}
+          <motion.a
+            href="/CV_Camilo_Rojas_Baeza.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl border border-zinc-300 dark:border-zinc-700/60 hover:border-zinc-400 dark:hover:border-zinc-600 hover:bg-zinc-100 dark:hover:bg-zinc-800/40 text-zinc-700 dark:text-zinc-300 text-sm font-semibold transition-all cursor-pointer"
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
           >
-            {t.hero.ctaContact}
-          </motion.button>
+            {t.hero.ctaCv}
+          </motion.a>
         </motion.div>
 
         {/* Social */}
