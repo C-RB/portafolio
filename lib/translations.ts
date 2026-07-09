@@ -140,7 +140,7 @@ export const translations: Record<Lang, Dictionary> = {
       description:
         "Una selección de proyectos que representan mis áreas de trabajo: plataformas web, backends, sistemas de gestión y herramientas con impacto real.",
       featured: "Destacado",
-      demo: "Demo",
+      demo: "Ver Proyecto",
       code: "Código",
       viewMore: "Ver más en GitHub",
     },
@@ -237,7 +237,7 @@ export const translations: Record<Lang, Dictionary> = {
       description:
         "A selection of projects that represent my areas of work: web platforms, backends, management systems, and tools with real impact.",
       featured: "Featured",
-      demo: "Demo",
+      demo: "View Project",
       code: "Code",
       viewMore: "See more on GitHub",
     },

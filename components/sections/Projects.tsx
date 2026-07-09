@@ -101,16 +101,6 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
                 <ExternalLink size={13} />
                 {t.projects.demo}
               </a>
-              <a
-                href={project.repoUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-zinc-200 hover:bg-zinc-300 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-800 dark:text-zinc-200 text-xs font-semibold border border-zinc-300 dark:border-zinc-700 transition-colors"
-                onClick={(e) => e.stopPropagation()}
-              >
-                <Github size={13} />
-                {t.projects.code}
-              </a>
             </motion.div>
           )}
         </AnimatePresence>
@@ -165,15 +155,6 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         <div className="flex items-center justify-between pt-2 border-t border-zinc-200 dark:border-zinc-800/60">
           <Badge color="blue">{project.category[lang]}</Badge>
           <div className="flex items-center gap-2">
-            <a
-              href={project.repoUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-1.5 rounded-lg text-zinc-500 dark:text-zinc-600 hover:text-zinc-900 dark:hover:text-zinc-200 hover:bg-zinc-200/60 dark:hover:bg-zinc-800/60 transition-colors"
-              aria-label="Repositorio"
-            >
-              <Github size={15} />
-            </a>
             <a
               href={project.demoUrl}
               target="_blank"
