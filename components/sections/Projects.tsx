@@ -74,10 +74,10 @@ function ProjectCard({
   onOpenGallery: (project: Project) => void;
 }) {
   const [hovered, setHovered] = useState(false);
-  const [coverError, setCoverError] = useState(false);
+  const [stackExpanded, setStackExpanded] = useState(false);
   const { lang, t } = useLanguage();
   const hasGallery = project.images.length > 0;
-  const hasImages = hasGallery && !coverError;
+  const hiddenStack = project.stack.slice(5);
 
   return (
     <motion.article
@@ -91,18 +91,7 @@ function ProjectCard({
     >
       {/* Image area */}
       <div className="relative w-full aspect-[16/9] overflow-hidden bg-zinc-100 dark:bg-zinc-900">
-        {hasImages ? (
-          <Image
-            src={project.images[0]}
-            alt={project.name}
-            fill
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            className="object-cover"
-            onError={() => setCoverError(true)}
-          />
-        ) : (
-          <ProjectPlaceholder project={project} category={project.category[lang]} />
-        )}
+        <ProjectPlaceholder project={project} category={project.category[lang]} />
 
         {/* Overlay on hover */}
         <AnimatePresence>
@@ -141,37 +130,41 @@ function ProjectCard({
 
       {/* Content */}
       <div className="flex flex-col flex-1 p-5 gap-3">
-        <div className="flex items-start justify-between gap-2">
+        <div>
           <h3 className="font-bold text-zinc-900 dark:text-zinc-100 text-base group-hover:text-black dark:group-hover:text-white transition-colors">
             {project.name}
           </h3>
-          <motion.div
-            animate={{ rotate: hovered ? 45 : 0, opacity: hovered ? 1 : 0.3 }}
-            transition={{ duration: 0.2 }}
-          >
-            <ArrowUpRight size={16} className="text-zinc-500 dark:text-zinc-400 flex-shrink-0 mt-0.5" />
-          </motion.div>
+          <p className="text-xs text-zinc-500 dark:text-zinc-500 font-medium mt-0.5">
+            {project.tagline[lang]}
+          </p>
         </div>
 
-        {/* Problem solved */}
-        <p className="text-sm text-blue-700/90 dark:text-blue-300/90 leading-relaxed line-clamp-2">
+        {/* Problem it solves */}
+        <p className="text-sm text-blue-700/90 dark:text-blue-300/90 leading-relaxed line-clamp-4">
           {project.problem[lang]}
         </p>
 
-        {/* Brief description */}
-        <p className="text-xs text-zinc-600 dark:text-zinc-500 leading-relaxed line-clamp-2">
-          {project.tagline[lang]}
+        {/* Full description */}
+        <p className="text-xs text-zinc-600 dark:text-zinc-500 leading-relaxed line-clamp-3">
+          {project.description[lang]}
         </p>
 
         {/* Stack */}
         <div className="flex flex-wrap gap-1.5 mt-auto pt-1">
-          {project.stack.slice(0, 5).map((tech) => (
+          {(stackExpanded ? project.stack : project.stack.slice(0, 5)).map((tech) => (
             <Badge key={tech} color="zinc">
               {tech}
             </Badge>
           ))}
-          {project.stack.length > 5 && (
-            <Badge color="zinc">+{project.stack.length - 5}</Badge>
+          {hiddenStack.length > 0 && (
+            <button
+              type="button"
+              onClick={() => setStackExpanded((v) => !v)}
+              title={hiddenStack.join(", ")}
+              className="px-2 py-0.5 rounded-full text-[11px] font-medium bg-zinc-200/70 dark:bg-zinc-800/70 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-300/70 dark:hover:bg-zinc-700/70 transition-colors"
+            >
+              {stackExpanded ? t.projects.showLess : `+${hiddenStack.length}`}
+            </button>
           )}
         </div>
 
