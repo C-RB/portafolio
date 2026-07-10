@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { ExternalLink, Github, ArrowUpRight } from "lucide-react";
+import { ExternalLink, Github, ArrowUpRight, X, ChevronLeft, ChevronRight, Images } from "lucide-react";
 import { projects, type Project, type ProjectAccent } from "@/data/projects";
 import SectionTitle from "@/components/ui/SectionTitle";
 import Badge from "@/components/ui/Badge";
@@ -63,9 +64,20 @@ function ProjectPlaceholder({ project, category }: { project: Project; category:
   );
 }
 
-function ProjectCard({ project, index }: { project: Project; index: number }) {
+function ProjectCard({
+  project,
+  index,
+  onOpenGallery,
+}: {
+  project: Project;
+  index: number;
+  onOpenGallery: (project: Project) => void;
+}) {
   const [hovered, setHovered] = useState(false);
+  const [coverError, setCoverError] = useState(false);
   const { lang, t } = useLanguage();
+  const hasGallery = project.images.length > 0;
+  const hasImages = hasGallery && !coverError;
 
   return (
     <motion.article
@@ -79,11 +91,22 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
     >
       {/* Image area */}
       <div className="relative w-full aspect-[16/9] overflow-hidden bg-zinc-100 dark:bg-zinc-900">
-        <ProjectPlaceholder project={project} category={project.category[lang]} />
+        {hasImages ? (
+          <Image
+            src={project.images[0]}
+            alt={project.name}
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            className="object-cover"
+            onError={() => setCoverError(true)}
+          />
+        ) : (
+          <ProjectPlaceholder project={project} category={project.category[lang]} />
+        )}
 
         {/* Overlay on hover */}
         <AnimatePresence>
-          {hovered && (
+          {hovered && hasGallery && (
             <motion.div
               className="absolute inset-0 bg-white/90 dark:bg-zinc-950/80 flex items-center justify-center gap-3"
               initial={{ opacity: 0 }}
@@ -91,16 +114,17 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
             >
-              <a
-                href={project.demoUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onOpenGallery(project);
+                }}
                 className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold transition-colors"
-                onClick={(e) => e.stopPropagation()}
               >
-                <ExternalLink size={13} />
+                <Images size={13} />
                 {t.projects.demo}
-              </a>
+              </button>
             </motion.div>
           )}
         </AnimatePresence>
@@ -154,25 +178,133 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         {/* Category + Links */}
         <div className="flex items-center justify-between pt-2 border-t border-zinc-200 dark:border-zinc-800/60">
           <Badge color="blue">{project.category[lang]}</Badge>
-          <div className="flex items-center gap-2">
-            <a
-              href={project.demoUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-1.5 rounded-lg text-zinc-500 dark:text-zinc-600 hover:text-zinc-900 dark:hover:text-zinc-200 hover:bg-zinc-200/60 dark:hover:bg-zinc-800/60 transition-colors"
-              aria-label="Demo"
-            >
-              <ExternalLink size={15} />
-            </a>
-          </div>
+          {hasGallery && (
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => onOpenGallery(project)}
+                className="p-1.5 rounded-lg text-zinc-500 dark:text-zinc-600 hover:text-zinc-900 dark:hover:text-zinc-200 hover:bg-zinc-200/60 dark:hover:bg-zinc-800/60 transition-colors"
+                aria-label={t.projects.demo}
+              >
+                <ExternalLink size={15} />
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </motion.article>
   );
 }
 
+function ProjectGalleryModal({
+  project,
+  onClose,
+}: {
+  project: Project;
+  onClose: () => void;
+}) {
+  const [index, setIndex] = useState(0);
+  const { lang, t } = useLanguage();
+  const images = project.images;
+  const hasImages = images.length > 0;
+
+  const goPrev = () => setIndex((i) => (i - 1 + images.length) % images.length);
+  const goNext = () => setIndex((i) => (i + 1) % images.length);
+
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+      if (e.key === "ArrowLeft") goPrev();
+      if (e.key === "ArrowRight") goNext();
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKeyDown);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [images.length]);
+
+  return (
+    <motion.div
+      className="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex flex-col items-center justify-center p-4 sm:p-8"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2 }}
+      onClick={onClose}
+    >
+      <button
+        type="button"
+        onClick={onClose}
+        aria-label={t.projects.closeGallery}
+        className="absolute top-4 right-4 sm:top-6 sm:right-6 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors"
+      >
+        <X size={22} />
+      </button>
+
+      <div className="flex flex-col items-center gap-3 max-w-5xl w-full">
+        <h3 className="text-white font-semibold text-sm sm:text-base">{project.name}</h3>
+
+        {hasImages ? (
+          <div
+            className="relative w-full aspect-[16/10] sm:aspect-[16/9] rounded-xl overflow-hidden bg-zinc-900"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <Image
+              key={images[index]}
+              src={images[index]}
+              alt={`${project.name} ${index + 1}`}
+              fill
+              sizes="(max-width: 1024px) 100vw, 1024px"
+              className="object-contain"
+            />
+
+            {images.length > 1 && (
+              <>
+                <button
+                  type="button"
+                  onClick={goPrev}
+                  aria-label="Previous"
+                  className="absolute left-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/40 hover:bg-black/60 text-white transition-colors"
+                >
+                  <ChevronLeft size={20} />
+                </button>
+                <button
+                  type="button"
+                  onClick={goNext}
+                  aria-label="Next"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/40 hover:bg-black/60 text-white transition-colors"
+                >
+                  <ChevronRight size={20} />
+                </button>
+                <span className="absolute bottom-3 left-1/2 -translate-x-1/2 px-2.5 py-1 rounded-full bg-black/50 text-white text-xs font-medium">
+                  {index + 1} / {images.length}
+                </span>
+              </>
+            )}
+          </div>
+        ) : (
+          <div
+            className="w-full aspect-[16/9] rounded-xl overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <ProjectPlaceholder project={project} category={project.category[lang]} />
+          </div>
+        )}
+
+        {!hasImages && (
+          <p className="text-zinc-400 text-xs">{t.projects.noImages}</p>
+        )}
+      </div>
+    </motion.div>
+  );
+}
+
 export default function Projects() {
   const { t } = useLanguage();
+  const [galleryProject, setGalleryProject] = useState<Project | null>(null);
 
   return (
     <section id="projects" className="py-24 sm:py-32 relative overflow-hidden">
@@ -193,7 +325,12 @@ export default function Projects() {
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {projects.map((project, i) => (
-              <ProjectCard key={project.id} project={project} index={i} />
+              <ProjectCard
+                key={project.id}
+                project={project}
+                index={i}
+                onOpenGallery={setGalleryProject}
+              />
             ))}
           </div>
 
@@ -218,6 +355,15 @@ export default function Projects() {
           </motion.div>
         </div>
       </div>
+
+      <AnimatePresence>
+        {galleryProject && (
+          <ProjectGalleryModal
+            project={galleryProject}
+            onClose={() => setGalleryProject(null)}
+          />
+        )}
+      </AnimatePresence>
     </section>
   );
 }

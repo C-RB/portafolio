@@ -47,6 +47,8 @@ export type Dictionary = {
     demo: string;
     code: string;
     viewMore: string;
+    closeGallery: string;
+    noImages: string;
   };
   contact: {
     eyebrow: string;
@@ -143,6 +145,8 @@ export const translations: Record<Lang, Dictionary> = {
       demo: "Ver Proyecto",
       code: "Código",
       viewMore: "Ver más en GitHub",
+      closeGallery: "Cerrar",
+      noImages: "Capturas próximamente",
     },
     contact: {
       eyebrow: "Contacto",
@@ -240,6 +244,8 @@ export const translations: Record<Lang, Dictionary> = {
       demo: "View Project",
       code: "Code",
       viewMore: "See more on GitHub",
+      closeGallery: "Close",
+      noImages: "Screenshots coming soon",
     },
     contact: {
       eyebrow: "Contact",

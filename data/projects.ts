@@ -23,7 +23,7 @@ export type Project = {
   category: LocalizedText;
   demoUrl: string;
   repoUrl: string;
-  image: string;
+  images: string[];
   icon: LucideIcon;
   accent: ProjectAccent;
   featured?: boolean;
@@ -58,7 +58,12 @@ export const projects: Project[] = [
     category: { es: "Impacto Social", en: "Social Impact" },
     demoUrl: "#",
     repoUrl: "#",
-    image: "/images/projects/sobracero.png",
+    images: [
+      "/images/projects/sobracero/1.png",
+      "/images/projects/sobracero/2.png",
+      "/images/projects/sobracero/3.png",
+      "/images/projects/sobracero/4.png",
+    ],
     icon: Soup,
     accent: "emerald",
     featured: true,
@@ -82,7 +87,7 @@ export const projects: Project[] = [
     category: { es: "Backend / Arquitectura", en: "Backend / Architecture" },
     demoUrl: "#",
     repoUrl: "https://github.com/C-RB",
-    image: "/images/projects/bilup.png",
+    images: [],
     icon: ShieldCheck,
     accent: "indigo",
     featured: true,
@@ -106,7 +111,16 @@ export const projects: Project[] = [
     category: { es: "Mobile / Educación", en: "Mobile / Education" },
     demoUrl: "#",
     repoUrl: "#",
-    image: "/images/projects/lexpa.png",
+    images: [
+      "/images/projects/lexpa/1.png",
+      "/images/projects/lexpa/2.png",
+      "/images/projects/lexpa/3.png",
+      "/images/projects/lexpa/4.png",
+      "/images/projects/lexpa/5.png",
+      "/images/projects/lexpa/6.png",
+      "/images/projects/lexpa/7.png",
+      "/images/projects/lexpa/8.png",
+    ],
     icon: BookOpen,
     accent: "orange",
   },
@@ -129,7 +143,17 @@ export const projects: Project[] = [
     category: { es: "Mobile / Salud", en: "Mobile / Healthcare" },
     demoUrl: "#",
     repoUrl: "#",
-    image: "/images/projects/activamente.png",
+    images: [
+      "/images/projects/activamente/1.png",
+      "/images/projects/activamente/2.png",
+      "/images/projects/activamente/3.png",
+      "/images/projects/activamente/4.png",
+      "/images/projects/activamente/5.png",
+      "/images/projects/activamente/6.png",
+      "/images/projects/activamente/7.png",
+      "/images/projects/activamente/8.png",
+      "/images/projects/activamente/9.png",
+    ],
     icon: HeartPulse,
     accent: "rose",
   },
