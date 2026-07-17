@@ -3,6 +3,7 @@ import {
   ShieldCheck,
   BookOpen,
   HeartPulse,
+  Stethoscope,
   type LucideIcon,
 } from "lucide-react";
 
@@ -30,6 +31,50 @@ export type Project = {
 };
 
 export const projects: Project[] = [
+  {
+    id: "eunacomia",
+    name: "EunacomIA",
+    tagline: {
+      es: "Plataforma SaaS educativa para preparación EUNACOM",
+      en: "Educational SaaS platform for EUNACOM preparation",
+    },
+    description: {
+      es: "Plataforma SaaS educativa diseñada para estudiantes y profesionales de la salud en Chile. Ayuda a prepararse para el EUNACOM mediante simulacros interactivos, flashcards inteligentes (Active Recall) y dashboards analíticos. Incluye un panel administrativo para generación masiva de contenido, pasarela de pagos con MercadoPago y sistema de autenticación robusto.",
+      en: "Educational SaaS platform designed for healthcare students and professionals in Chile. It helps prepare for the EUNACOM exam through interactive mock exams, smart flashcards (Active Recall), and analytical dashboards. Features an admin panel for mass content generation, a payment gateway via MercadoPago, and a robust authentication system.",
+    },
+    problem: {
+      es: "El estudio para el examen EUNACOM requiere retener una gran cantidad de conocimiento clínico en poco tiempo. EunacomIA resuelve esto enfocándose en optimizar el tiempo a través del análisis de datos, simulacros y técnicas de memoria activa.",
+      en: "Studying for the EUNACOM exam requires retaining a large amount of clinical knowledge in a short time. EunacomIA solves this by focusing on optimizing time through data analysis, mock exams, and active recall techniques.",
+    },
+    stack: [
+      "React 19",
+      "Vite",
+      "Tailwind CSS",
+      "Node.js",
+      "Express",
+      "TypeScript",
+      "Prisma",
+      "MercadoPago",
+      "AWS S3"
+    ],
+    category: { es: "SaaS / Educación", en: "SaaS / Education" },
+    demoUrl: "#",
+    repoUrl: "#",
+    images: [
+      "/images/projects/eunacomia/eunacomia_1.png",
+      "/images/projects/eunacomia/eunacomia_2.png",
+      "/images/projects/eunacomia/eunacomia_3.png",
+      "/images/projects/eunacomia/eunacomia_4.png",
+      "/images/projects/eunacomia/eunacomia_6.png",
+      "/images/projects/eunacomia/eunacomia_7.png",
+      "/images/projects/eunacomia/eunacomia_8.png",
+      "/images/projects/eunacomia/eunacomia_9.png",
+      "/images/projects/eunacomia/eunacomia_10.png",
+    ],
+    icon: Stethoscope,
+    accent: "cyan",
+    featured: true,
+  },
   {
     id: "sobracero",
     name: "SobraCero",

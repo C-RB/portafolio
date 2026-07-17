@@ -117,15 +117,6 @@ function ProjectCard({
             </motion.div>
           )}
         </AnimatePresence>
-
-        {/* Featured badge */}
-        {project.featured && (
-          <div className="absolute top-3 left-3">
-            <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-blue-600/80 text-blue-100 backdrop-blur-sm">
-              {t.projects.featured}
-            </span>
-          </div>
-        )}
       </div>
 
       {/* Content */}
