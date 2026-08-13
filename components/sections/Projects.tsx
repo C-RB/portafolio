@@ -93,30 +93,38 @@ function ProjectCard({
       <div className="relative w-full aspect-[16/9] overflow-hidden bg-zinc-100 dark:bg-zinc-900">
         <ProjectPlaceholder project={project} category={project.category[lang]} />
 
-        {/* Overlay on hover */}
-        <AnimatePresence>
-          {hovered && hasGallery && (
-            <motion.div
-              className="absolute inset-0 bg-white/90 dark:bg-zinc-950/80 flex items-center justify-center gap-3"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-            >
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onOpenGallery(project);
-                }}
-                className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold transition-colors"
-              >
-                <Images size={13} />
-                {t.projects.demo}
-              </button>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {hasGallery && (
+          <button
+            type="button"
+            onClick={() => onOpenGallery(project)}
+            aria-label={t.projects.demo}
+            className="absolute inset-0 w-full h-full"
+          >
+            {/* Overlay on hover (desktop) */}
+            <AnimatePresence>
+              {hovered && (
+                <motion.div
+                  className="absolute inset-0 bg-white/90 dark:bg-zinc-950/80 flex items-center justify-center gap-3"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <span className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-blue-600 text-white text-xs font-semibold">
+                    <Images size={13} />
+                    {t.projects.demo}
+                  </span>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Persistent hint (mobile, no hover) */}
+            <span className="absolute bottom-2 right-2 sm:hidden flex items-center gap-1 px-2.5 py-1 rounded-full bg-black/60 text-white text-[10px] font-medium">
+              <Images size={11} />
+              {t.projects.demo}
+            </span>
+          </button>
+        )}
       </div>
 
       {/* Content */}
