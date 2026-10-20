@@ -165,6 +165,7 @@ export const projects: Project[] = [
       "/images/projects/lexpa/6.png",
       "/images/projects/lexpa/7.png",
       "/images/projects/lexpa/8.png",
+      "/images/projects/lexpa/lexpa_playstore.jpeg",
     ],
     icon: BookOpen,
     accent: "orange",
