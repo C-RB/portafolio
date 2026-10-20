@@ -157,6 +157,7 @@ export const projects: Project[] = [
     demoUrl: "#",
     repoUrl: "#",
     images: [
+      "/images/projects/lexpa/lexpa_playstore.jpeg",
       "/images/projects/lexpa/1.png",
       "/images/projects/lexpa/2.png",
       "/images/projects/lexpa/3.png",
@@ -165,7 +166,6 @@ export const projects: Project[] = [
       "/images/projects/lexpa/6.png",
       "/images/projects/lexpa/7.png",
       "/images/projects/lexpa/8.png",
-      "/images/projects/lexpa/lexpa_playstore.jpeg",
     ],
     icon: BookOpen,
     accent: "orange",
