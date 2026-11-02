@@ -24,14 +24,14 @@ const websiteJsonLd = {
 };
 
 export const metadata: Metadata = {
-  title: "Portafolio | Ingeniero en Informática",
+  title: "Camilo Rojas Baeza | Ingeniero en Informática",
   description:
     "Portafolio profesional de desarrollador full-stack especializado en React, Next.js, Python y arquitectura de software moderno.",
   keywords: ["desarrollador", "portfolio", "React", "Next.js", "Python", "TypeScript"],
   authors: [{ name: "C-RB" }],
   openGraph: {
     type: "website",
-    title: "Portafolio | Ingeniero en Informática",
+    title: "Camilo Rojas Baeza | Ingeniero en Informática",
     description: "Desarrollador full-stack construyendo productos digitales modernos.",
   },
 };
