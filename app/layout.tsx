@@ -13,6 +13,16 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const SITE_URL = "https://camilo-rojas.dev";
+
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Camilo Rojas",
+  alternateName: ["camilo-rojas.dev"],
+  url: SITE_URL,
+};
+
 export const metadata: Metadata = {
   title: "Portafolio | Ingeniero en Informática",
   description:
@@ -45,6 +55,12 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-screen bg-white text-zinc-900 dark:bg-[#09090b] dark:text-zinc-50 overflow-x-hidden">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(websiteJsonLd).replace(/</g, "\\u003c"),
+          }}
+        />
         <Providers>{children}</Providers>
       </body>
     </html>
