@@ -14,6 +14,10 @@ export type LocalizedText = {
   en: string;
 };
 
+export type ProjectPreview =
+  | { type: "mobile"; images: [string, string, string] }
+  | { type: "web"; image: string };
+
 export type Project = {
   id: string;
   name: string;
@@ -25,6 +29,7 @@ export type Project = {
   demoUrl: string;
   repoUrl: string;
   images: string[];
+  preview?: ProjectPreview;
   icon: LucideIcon;
   accent: ProjectAccent;
   featured?: boolean;
@@ -71,6 +76,7 @@ export const projects: Project[] = [
       "/images/projects/eunacomia/eunacomia_9.png",
       "/images/projects/eunacomia/eunacomia_10.png",
     ],
+    preview: { type: "web", image: "/images/projects/eunacomia/eunacomia_1.png" },
     icon: Stethoscope,
     accent: "cyan",
     featured: true,
@@ -109,6 +115,7 @@ export const projects: Project[] = [
       "/images/projects/sobracero/3.png",
       "/images/projects/sobracero/4.png",
     ],
+    preview: { type: "web", image: "/images/projects/sobracero/1.png" },
     icon: Soup,
     accent: "emerald",
     featured: true,
@@ -167,6 +174,14 @@ export const projects: Project[] = [
       "/images/projects/lexpa/7.png",
       "/images/projects/lexpa/8.png",
     ],
+    preview: {
+      type: "mobile",
+      images: [
+        "/images/projects/lexpa/2.png",
+        "/images/projects/lexpa/1.png",
+        "/images/projects/lexpa/3.png",
+      ],
+    },
     icon: BookOpen,
     accent: "orange",
   },
@@ -200,6 +215,14 @@ export const projects: Project[] = [
       "/images/projects/activamente/8.png",
       "/images/projects/activamente/9.png",
     ],
+    preview: {
+      type: "mobile",
+      images: [
+        "/images/projects/activamente/2.png",
+        "/images/projects/activamente/1.png",
+        "/images/projects/activamente/3.png",
+      ],
+    },
     icon: HeartPulse,
     accent: "rose",
   },

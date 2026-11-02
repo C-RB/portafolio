@@ -54,12 +54,58 @@ function ProjectPlaceholder({ project, category }: { project: Project; category:
       className={`relative w-full h-full bg-gradient-to-br ${styles.bg} flex items-center justify-center overflow-hidden`}
     >
       <div className={`absolute w-40 h-40 rounded-full blur-3xl ${styles.glow}`} />
-      <div className="relative flex flex-col items-center gap-2">
-        <Icon size={40} strokeWidth={1.5} className={styles.icon} />
-        <span className="text-[10px] uppercase tracking-widest text-zinc-500 dark:text-zinc-500/80 font-medium">
-          {category}
-        </span>
+      {!project.preview && (
+        <div className="relative flex flex-col items-center gap-2">
+          <Icon size={40} strokeWidth={1.5} className={styles.icon} />
+          <span className="text-[10px] uppercase tracking-widest text-zinc-500 dark:text-zinc-500/80 font-medium">
+            {category}
+          </span>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function ProjectPreviewImages({ project }: { project: Project }) {
+  const { preview, name } = project;
+  if (!preview) return null;
+
+  if (preview.type === "web") {
+    return (
+      <div className="pointer-events-none absolute inset-x-[10%] top-[14%] rounded-t-lg overflow-hidden shadow-xl shadow-zinc-900/20 dark:shadow-black/50 ring-1 ring-zinc-900/10 dark:ring-white/10 transition-transform duration-300 group-hover:-translate-y-1">
+        <Image
+          src={preview.image}
+          alt={name}
+          width={1906}
+          height={927}
+          sizes="(max-width: 768px) 80vw, 400px"
+          className="w-full h-auto"
+        />
       </div>
+    );
+  }
+
+  return (
+    <div className="pointer-events-none absolute inset-0 flex items-center justify-center gap-2.5 sm:gap-3 transition-transform duration-300 group-hover:-translate-y-1">
+      {preview.images.map((src, i) => {
+        const isCenter = i === 1;
+        return (
+          <div
+            key={src}
+            className={`relative aspect-[427/943] rounded-xl overflow-hidden shadow-lg shadow-zinc-900/20 dark:shadow-black/50 ring-1 ring-zinc-900/10 dark:ring-white/10 ${
+              isCenter ? "h-[88%] z-10" : "h-[74%] translate-y-[8%]"
+            }`}
+          >
+            <Image
+              src={src}
+              alt={`${name} ${i + 1}`}
+              fill
+              sizes="120px"
+              className="object-cover"
+            />
+          </div>
+        );
+      })}
     </div>
   );
 }
@@ -92,6 +138,7 @@ function ProjectCard({
       {/* Image area */}
       <div className="relative w-full aspect-[16/9] overflow-hidden bg-zinc-100 dark:bg-zinc-900">
         <ProjectPlaceholder project={project} category={project.category[lang]} />
+        <ProjectPreviewImages project={project} />
 
         {hasGallery && (
           <button
