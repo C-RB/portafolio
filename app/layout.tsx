@@ -24,6 +24,7 @@ const websiteJsonLd = {
 };
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: "Camilo Rojas Baeza | Ingeniero en Informática",
   description:
     "Portafolio profesional de desarrollador full-stack especializado en React, Next.js, Python y arquitectura de software moderno.",
@@ -31,6 +32,14 @@ export const metadata: Metadata = {
   authors: [{ name: "C-RB" }],
   openGraph: {
     type: "website",
+    url: "/",
+    siteName: "Camilo Rojas Baeza",
+    locale: "es_CL",
+    title: "Camilo Rojas Baeza | Ingeniero en Informática",
+    description: "Desarrollador full-stack construyendo productos digitales modernos.",
+  },
+  twitter: {
+    card: "summary_large_image",
     title: "Camilo Rojas Baeza | Ingeniero en Informática",
     description: "Desarrollador full-stack construyendo productos digitales modernos.",
   },
