@@ -18,7 +18,7 @@ const SITE_URL = "https://camilo-rojas.dev";
 const websiteJsonLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  name: "Camilo Rojas",
+  name: "Camilo Rojas Baeza",
   alternateName: ["camilo-rojas.dev"],
   url: SITE_URL,
 };
