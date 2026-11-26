@@ -45,7 +45,7 @@ export default function About() {
         <Glow name="about-glow-2" x={890} y={320} w={740} />
       </GlowLayer>
 
-      <div className="mx-auto max-w-[1440px] px-5 py-24 lg:px-20 lg:py-40">
+      <div className="mx-auto max-w-[1440px] px-5 py-20 lg:px-20 lg:py-[clamp(80px,19svh,160px)]">
         <div className="flex max-w-[1040px] flex-col gap-12">
           <Reveal>
             <h2 className="text-[15px] font-medium text-muted">{t.about.eyebrow}</h2>

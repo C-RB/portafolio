@@ -10,7 +10,7 @@ import { useTheme } from "@/lib/theme-context";
 const SECTIONS = ["hero", "about", "stack", "projects", "contact"] as const;
 
 const roundButton =
-  "flex size-[34px] items-center justify-center rounded-full border border-line-strong bg-card backdrop-blur-md text-muted hover:text-strong transition active:scale-95 cursor-pointer";
+  "relative after:absolute after:-inset-[5px] flex size-[34px] items-center justify-center rounded-full border border-line-strong bg-card backdrop-blur-md text-muted hover:text-strong transition active:scale-95 cursor-pointer";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -56,11 +56,11 @@ export default function Navbar() {
         transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
       >
         <nav className="mx-auto flex max-w-[1440px] items-center justify-between px-5 lg:px-20">
-          <button type="button" onClick={() => handleNavClick("hero")} className="flex items-center gap-3 cursor-pointer">
+          <button type="button" onClick={() => handleNavClick("hero")} className="relative flex items-center gap-3 after:absolute after:-inset-y-[5px] after:inset-x-0 cursor-pointer">
             <span className="flex size-[34px] items-center justify-center rounded-full bg-gradient-to-b from-[var(--title-from)] to-muted text-xs font-bold text-background">
               CR
             </span>
-            <span className="text-[15px] font-semibold tracking-[-0.01em]">Camilo Rojas</span>
+            <span className="whitespace-nowrap text-[15px] font-semibold tracking-[-0.01em]">Camilo Rojas</span>
           </button>
 
           <ul className="hidden lg:flex items-center gap-0.5 rounded-full border border-line-strong bg-card p-[5px] backdrop-blur-md">
@@ -95,7 +95,7 @@ export default function Navbar() {
             </span>
             <button
               onClick={toggleLang}
-              className="flex items-center gap-1.5 font-mono text-xs text-muted hover:text-strong transition-colors cursor-pointer"
+              className="relative flex items-center gap-1.5 after:absolute after:-inset-x-1.5 after:-inset-y-3.5 font-mono text-xs text-muted hover:text-strong transition-colors cursor-pointer"
               aria-label="Cambiar idioma / Switch language"
             >
               <Icon name="languages" size={14} />

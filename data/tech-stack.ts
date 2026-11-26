@@ -21,7 +21,7 @@ export const techStack: Record<"frontend" | "backend" | "data" | "devops", Tech[
   devops: [
     { name: "Android", logo: "android" },
     { name: "Git", logo: "git" },
-    { name: "Linux", logo: "ubuntu" },
+    { name: "Linux", logo: "linux" },
   ],
 };
 

@@ -86,7 +86,7 @@ export default function Contact() {
         <Glow name="contact-glow-2" x={680} y={160} w={1140} h={940} />
       </GlowLayer>
 
-      <div className="mx-auto max-w-[1440px] px-5 pb-24 pt-28 lg:px-20 lg:pb-[140px] lg:pt-[180px]">
+      <div className="mx-auto max-w-[1440px] px-5 pb-20 pt-20 lg:px-20 lg:pb-[clamp(80px,17svh,140px)] lg:pt-[clamp(96px,22svh,180px)]">
         <Reveal className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
           <h2 className="title-gradient pb-2 text-[clamp(60px,12.5vw,180px)] font-semibold leading-[0.95] tracking-[-0.07em]">
             {t.contact.title}
@@ -121,7 +121,7 @@ export default function Contact() {
                 </span>
                 <span className="flex min-w-0 flex-1 flex-col gap-0.5 leading-[1.25]">
                   <span className="text-[13px] text-muted">{link.label}</span>
-                  <span className="truncate text-base font-medium">{link.value}</span>
+                  <span className="break-words text-base font-medium">{link.value}</span>
                 </span>
                 <Icon
                   name="arrow-up-right"

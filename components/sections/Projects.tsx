@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
@@ -19,7 +20,7 @@ function ProjectText({ project, onOpen }: { project: Project; onOpen: () => void
   return (
     <div className="flex w-full max-w-[390px] flex-col items-start">
       <p className="font-mono text-[13px] uppercase tracking-[0.04em] text-white/80">{project.category[lang]}</p>
-      <h3 className="mt-6 text-5xl font-semibold tracking-[-0.04em] lg:text-[64px] lg:leading-[1.2]">{project.name}</h3>
+      <h3 className="mt-6 text-[clamp(34px,11vw,48px)] font-semibold tracking-[-0.04em] lg:text-[64px] lg:leading-[1.2]">{project.name}</h3>
       <p className="mt-5 text-[17px] leading-[27px] text-white/80">{project.problem[lang]}</p>
       <ul className="mt-7 flex flex-wrap gap-2">
         {project.stack.slice(0, 5).map((tech) => (
@@ -117,7 +118,8 @@ function ProjectGalleryModal({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [images.length]);
 
-  return (
+  // Rendered on <body>: <main> is its own stacking context, below the navbar.
+  return createPortal(
     <motion.div
       className="fixed inset-0 z-[60] bg-black/85 backdrop-blur-sm flex flex-col items-center justify-center p-4 sm:p-8"
       initial={{ opacity: 0 }}
@@ -140,7 +142,7 @@ function ProjectGalleryModal({
 
         {hasImages ? (
           <div
-            className="relative w-full aspect-[16/10] sm:aspect-[16/9] rounded-xl overflow-hidden bg-zinc-900"
+            className="relative w-full h-[75svh] sm:h-auto sm:aspect-[16/9] rounded-xl overflow-hidden bg-zinc-900"
             onClick={(e) => e.stopPropagation()}
           >
             <Image
@@ -180,7 +182,8 @@ function ProjectGalleryModal({
           <p className="text-zinc-400 text-sm py-16">{t.projects.noImages}</p>
         )}
       </div>
-    </motion.div>
+    </motion.div>,
+    document.body
   );
 }
 
@@ -190,7 +193,7 @@ export default function Projects() {
 
   return (
     <section id="projects" className="relative">
-      <div className="mx-auto max-w-[1440px] px-5 pb-20 pt-20 lg:px-20 lg:pt-[140px]">
+      <div className="mx-auto max-w-[1440px] px-5 pb-16 pt-16 lg:px-20 lg:pb-20 lg:pt-[clamp(72px,17svh,140px)]">
         <SectionHeading title={t.projects.title} description={t.projects.description} />
 
         <div className="mt-14 flex flex-col gap-7 lg:mt-24">
