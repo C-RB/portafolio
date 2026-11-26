@@ -3,7 +3,7 @@ export default function Glow({ name, x, y, w, h = w }: { name: string; x: number
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      src={`/figma/${name}.svg`}
+      src={`/assets/glows/${name}.svg`}
       alt=""
       aria-hidden
       className="pointer-events-none absolute max-w-none"

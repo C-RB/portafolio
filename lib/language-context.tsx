@@ -1,7 +1,10 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, type ReactNode } from "react";
 import { translations, type Lang, type Dictionary } from "@/lib/translations";
+import { useStoredValue } from "@/lib/use-stored-value";
+
+const LANGS = ["es", "en"] as const;
 
 type LanguageContextValue = {
   lang: Lang;
@@ -12,26 +15,17 @@ type LanguageContextValue = {
 const LanguageContext = createContext<LanguageContextValue | undefined>(undefined);
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [lang, setLang] = useState<Lang>("es");
+  const [lang, setLang] = useStoredValue<Lang>("lang", LANGS, "es");
 
+  // Screen readers and browser translation rely on the page language.
   useEffect(() => {
-    const stored = localStorage.getItem("lang");
-    if (stored === "es" || stored === "en") setLang(stored);
-  }, []);
+    document.documentElement.lang = lang;
+  }, [lang]);
 
-  const toggleLang = () => {
-    setLang((prev) => {
-      const next: Lang = prev === "es" ? "en" : "es";
-      localStorage.setItem("lang", next);
-      return next;
-    });
-  };
+  const toggleLang = useCallback(() => setLang(lang === "es" ? "en" : "es"), [lang, setLang]);
+  const value = useMemo(() => ({ lang, toggleLang, t: translations[lang] }), [lang, toggleLang]);
 
-  return (
-    <LanguageContext.Provider value={{ lang, toggleLang, t: translations[lang] }}>
-      {children}
-    </LanguageContext.Provider>
-  );
+  return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>;
 }
 
 export function useLanguage() {

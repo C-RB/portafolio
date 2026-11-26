@@ -14,6 +14,8 @@ type FormState = {
   email: string;
   subject: string;
   message: string;
+  /** Honeypot: hidden from people, so only bots fill it in. */
+  company_url: string;
 };
 
 const inputClass =
@@ -36,6 +38,7 @@ export default function Contact() {
     email: "",
     subject: "",
     message: "",
+    company_url: "",
   });
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -82,8 +85,8 @@ export default function Contact() {
   return (
     <section id="contact" className="relative">
       <GlowLayer>
-        <Glow name="contact-glow-1" x={-520} y={-100} w={1340} h={1040} />
-        <Glow name="contact-glow-2" x={680} y={160} w={1140} h={940} />
+        <Glow name="contact-1" x={-520} y={-100} w={1340} h={1040} />
+        <Glow name="contact-2" x={680} y={160} w={1140} h={940} />
       </GlowLayer>
 
       <div className="mx-auto max-w-[1440px] px-5 pb-20 pt-20 lg:px-20 lg:pb-[clamp(80px,17svh,140px)] lg:pt-[clamp(96px,22svh,180px)]">
@@ -152,7 +155,7 @@ export default function Contact() {
                     <p className="mt-1 text-sm text-muted">{t.contact.sentDesc}</p>
                   </div>
                   <button
-                    onClick={() => { setSent(false); setForm({ name: "", email: "", subject: "", message: "" }); }}
+                    onClick={() => { setSent(false); setForm({ name: "", email: "", subject: "", message: "", company_url: "" }); }}
                     className="text-sm text-muted transition-colors hover:text-strong cursor-pointer"
                   >
                     {t.contact.sendAnother}
@@ -164,19 +167,20 @@ export default function Contact() {
                     <h3 className="text-xl font-semibold text-strong">{t.contact.formTitle}</h3>
                     <p className="text-sm text-muted">{t.contact.formHint}</p>
                   </div>
+                  <input type="text" name="company_url" value={form.company_url} onChange={handleChange} tabIndex={-1} autoComplete="off" aria-hidden className="hidden" />
                   <div className="grid gap-4 sm:grid-cols-2">
                     <Field label={t.contact.formName}>
-                      <input type="text" name="name" value={form.name} onChange={handleChange} placeholder={t.contact.formNamePlaceholder} required className={`${inputClass} h-[52px]`} />
+                      <input type="text" name="name" maxLength={100} value={form.name} onChange={handleChange} placeholder={t.contact.formNamePlaceholder} required className={`${inputClass} h-[52px]`} />
                     </Field>
                     <Field label={t.contact.formEmail}>
-                      <input type="email" name="email" value={form.email} onChange={handleChange} placeholder="tu@email.com" required className={`${inputClass} h-[52px]`} />
+                      <input type="email" name="email" maxLength={200} value={form.email} onChange={handleChange} placeholder="tu@email.com" required className={`${inputClass} h-[52px]`} />
                     </Field>
                   </div>
                   <Field label={t.contact.formSubject}>
-                    <input type="text" name="subject" value={form.subject} onChange={handleChange} placeholder={t.contact.formSubjectPlaceholder} required className={`${inputClass} h-[52px]`} />
+                    <input type="text" name="subject" maxLength={150} value={form.subject} onChange={handleChange} placeholder={t.contact.formSubjectPlaceholder} required className={`${inputClass} h-[52px]`} />
                   </Field>
                   <Field label={t.contact.formMessage}>
-                    <textarea name="message" value={form.message} onChange={handleChange} placeholder={t.contact.formMessagePlaceholder} required className={`${inputClass} h-[140px] resize-none py-4`} />
+                    <textarea name="message" maxLength={5000} value={form.message} onChange={handleChange} placeholder={t.contact.formMessagePlaceholder} required className={`${inputClass} h-[140px] resize-none py-4`} />
                   </Field>
                   <button
                     type="submit"

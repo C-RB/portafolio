@@ -12,7 +12,7 @@ function Browser({ project, left }: { project: Project; left: number }) {
     >
       <div className="flex items-center bg-[#1f1f22] px-[15.2px] py-[11.4px]">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/figma/traffic-lights.svg" alt="" className="h-[11.4px] w-[49.4px]" />
+        <img src="/assets/decor/traffic-lights.svg" alt="" className="h-[11.4px] w-[49.4px]" />
         <div className="flex flex-1 justify-center">
           <span className="rounded-[7.6px] bg-white/5 px-[57px] py-[4.75px] font-mono text-[11.4px] text-[#8e8e93]">
             {project.id}
@@ -82,7 +82,7 @@ function Editor({ title, lines, left, top, width }: { title: string; lines: Toke
     >
       <div className="flex items-center gap-[14.4px] bg-[#18181b] px-[11.52px] py-[8.64px]">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/figma/traffic-lights.svg" alt="" className="h-[8.64px] w-[37.44px]" />
+        <img src="/assets/decor/traffic-lights.svg" alt="" className="h-[8.64px] w-[37.44px]" />
         <span className="text-[8.64px] text-[#8e8e93]">{title}</span>
       </div>
       <div className="flex flex-col gap-[4.32px] px-[20.16px] py-[17.28px] text-[10.08px] leading-[normal]">
@@ -151,7 +151,7 @@ export const LAYOUTS: Record<string, Layout> = {
       );
     },
   },
-  activamente: {
+  "vida-activa": {
     textLeft: 63,
     textTop: 92,
     box: { x: 835, y: 80, width: 400, height: 450 },

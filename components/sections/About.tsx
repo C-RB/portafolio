@@ -17,7 +17,7 @@ export default function About() {
         <span className="relative block size-12 overflow-hidden">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/figma/logo-ufro.png"
+            src="/assets/logos/ufro.png"
             alt=""
             className="absolute left-[-31.97%] top-0 h-[138.11%] w-[163.11%] max-w-none"
           />
@@ -41,8 +41,8 @@ export default function About() {
   return (
     <section id="about" className="relative">
       <GlowLayer>
-        <Glow name="about-glow-1" x={640} y={-60} w={980} />
-        <Glow name="about-glow-2" x={890} y={320} w={740} />
+        <Glow name="about-1" x={640} y={-60} w={980} />
+        <Glow name="about-2" x={890} y={320} w={740} />
       </GlowLayer>
 
       <div className="mx-auto max-w-[1440px] px-5 py-20 lg:px-20 lg:py-[clamp(80px,19svh,160px)]">

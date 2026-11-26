@@ -15,16 +15,16 @@ const CHIPS = [
 ];
 
 const RINGS = [
-  { src: "ring-1.svg", offset: 260, size: 260 },
-  { src: "ring-2.png", offset: 155, size: 470 },
-  { src: "ring-3.svg", offset: 45, size: 690 },
+  { src: "decor/ring-1.svg", offset: 260, size: 260 },
+  { src: "decor/ring-2.png", offset: 155, size: 470 },
+  { src: "decor/ring-3.svg", offset: 45, size: 690 },
 ];
 
 function Layer({ src, left, top, size, className = "" }: { src: string; left: number; top: number; size: number; className?: string }) {
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      src={`/figma/${src}`}
+      src={`/assets/${src}`}
       alt=""
       className={`absolute max-w-none ${className}`}
       style={{ left, top, width: size, height: size }}
@@ -42,7 +42,7 @@ export default function Orbit() {
         {CHIPS.map(({ logo, glow: [gx, gy, gs], chip: [x, y, s], icon }) => (
           <div key={logo}>
             {/* The exported glow bleeds 38.89% past its node on every side. */}
-            <Layer src={`glow-${logo}.svg`} left={gx - gs * 0.3889} top={gy - gs * 0.3889} size={gs * 1.7778} className="opacity-35 dark:opacity-100" />
+            <Layer src={`glows/chip-${logo}.svg`} left={gx - gs * 0.3889} top={gy - gs * 0.3889} size={gs * 1.7778} className="opacity-35 dark:opacity-100" />
             <div
               className="orbit-counter-spin absolute flex items-center justify-center rounded-full border border-black/[0.06] bg-white shadow-[0_10px_24px_-6px_rgba(0,0,0,0.18)] dark:border-white/20 dark:bg-[#0a0a0c]/85 dark:shadow-[0_12px_30px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(255,255,255,0.07)]"
               style={{ left: x, top: y, width: s, height: s }}
@@ -52,7 +52,7 @@ export default function Orbit() {
           </div>
         ))}
       </div>
-      <Layer src="glow-core.svg" left={220} top={220} size={340} />
+      <Layer src="glows/chip-core.svg" left={220} top={220} size={340} />
       <div className="absolute left-[326px] top-[326px] flex size-[128px] items-center justify-center rounded-full border border-line-strong bg-card shadow-[0_12px_30px_-10px_rgba(0,0,0,0.15)] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.07)] backdrop-blur-md">
         <span className="title-gradient text-4xl font-semibold tracking-[-0.04em]">CR</span>
       </div>

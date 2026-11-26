@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portafolio de Camilo Rojas Baeza
 
-## Getting Started
+Sitio personal hecho con Next.js, React, Tailwind CSS y Framer Motion.
 
-First, run the development server:
+## Cómo correrlo
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev      # http://localhost:3000
+npm run build    # compilación de producción
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Estructura
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+app/                  Rutas, metadatos, favicon e imagen para compartir
+  api/contact/        Envío del formulario de contacto
+components/
+  layout/             Barra de navegación y proveedores
+  sections/           Secciones de la página (hero/ y projects/ en carpeta propia)
+  ui/                 Piezas reutilizables
+data/                 Proyectos y tecnologías
+lib/                  Idioma, tema, traducciones y utilidades
+public/
+  assets/             Iconos, logos, brillos y decoraciones del diseño
+  images/projects/    Capturas de cada proyecto
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Envío de correos
 
-## Learn More
+El formulario usa [Resend](https://resend.com) desde `app/api/contact/route.ts`.
+Necesita la variable `RESEND_API_KEY` en `.env.local` y en el servidor donde se publica.
+El remitente es `contacto@camilo-rojas.dev`, así que el dominio debe estar verificado en Resend.
 
-To learn more about Next.js, take a look at the following resources:
+## Dónde editar
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Textos en español e inglés: `lib/translations.ts`
+- Proyectos: `data/projects.ts` (el dibujo de cada panel está en `components/sections/projects/ProjectVisuals.tsx`)
+- Tecnologías: `data/tech-stack.ts`

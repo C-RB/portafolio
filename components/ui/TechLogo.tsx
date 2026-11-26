@@ -4,7 +4,7 @@ export default function TechLogo({ name, size }: { name: string; size: number })
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      src={`/figma/logo-${name}.${PNG_LOGOS.has(name) ? "png" : "svg"}`}
+      src={`/assets/logos/${name}.${PNG_LOGOS.has(name) ? "png" : "svg"}`}
       alt=""
       aria-hidden
       width={size}

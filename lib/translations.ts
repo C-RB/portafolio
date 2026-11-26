@@ -38,6 +38,8 @@ export type Dictionary = {
     description: string;
     demo: string;
     closeGallery: string;
+    previous: string;
+    next: string;
     noImages: string;
   };
   contact: {
@@ -109,6 +111,8 @@ export const translations: Record<Lang, Dictionary> = {
       description: "Cada proyecto nació de un problema concreto. Acá cuento cuál era y cómo lo resolví.",
       demo: "Ver proyecto",
       closeGallery: "Cerrar",
+      previous: "Anterior",
+      next: "Siguiente",
       noImages: "Capturas próximamente",
     },
     contact: {
@@ -178,6 +182,8 @@ export const translations: Record<Lang, Dictionary> = {
       description: "Every project started from a concrete problem. Here is what it was and how I solved it.",
       demo: "View project",
       closeGallery: "Close",
+      previous: "Previous",
+      next: "Next",
       noImages: "Screenshots coming soon",
     },
     contact: {

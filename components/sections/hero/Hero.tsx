@@ -1,9 +1,10 @@
 "use client";
 
 import { motion, type Variants } from "framer-motion";
-import Orbit from "@/components/sections/Orbit";
+import Orbit from "@/components/sections/hero/Orbit";
 import Glow, { GlowLayer } from "@/components/ui/Glow";
 import Icon from "@/components/ui/Icon";
+import PauseOffscreen from "@/components/ui/PauseOffscreen";
 import { useLanguage } from "@/lib/language-context";
 import { useMailto } from "@/lib/use-mailto";
 
@@ -38,10 +39,10 @@ export default function Hero() {
   return (
     <section id="hero" className="relative min-h-[100svh] lg:min-h-[max(600px,100svh)]">
       <GlowLayer>
-        <Glow name="hero-glow-1" x={340} y={-420} w={1220} h={920} />
-        <Glow name="hero-glow-2" x={810} y={-10} w={900} />
-        <Glow name="hero-glow-3" x={590} y={390} w={760} />
-        <Glow name="hero-glow-4" x={1020} y={460} w={700} />
+        <Glow name="hero-1" x={340} y={-420} w={1220} h={920} />
+        <Glow name="hero-2" x={810} y={-10} w={900} />
+        <Glow name="hero-3" x={590} y={390} w={760} />
+        <Glow name="hero-4" x={1020} y={460} w={700} />
       </GlowLayer>
 
       <motion.div
@@ -50,9 +51,9 @@ export default function Hero() {
         animate={{ opacity: 1 }}
         transition={{ duration: 1.2, delay: 0.3 }}
       >
-        <div className="max-lg:opacity-40">
+        <PauseOffscreen className="max-lg:opacity-40">
           <Orbit />
-        </div>
+        </PauseOffscreen>
       </motion.div>
 
       <div className="mx-auto flex max-w-[1440px] flex-col items-start px-5 pb-10 pt-32 lg:px-20 lg:pt-[clamp(104px,calc(100svh-577px),250px)]">

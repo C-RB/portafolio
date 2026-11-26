@@ -138,6 +138,10 @@ section[id] {
   mask-image: linear-gradient(to right, transparent, #000 17%, #000 83%, transparent);
 }
 
+[data-paused] * {
+  animation-play-state: paused !important;
+}
+
 /* Hero orbit */
 @keyframes orbit-float {
   from { transform: translateY(0); }
