@@ -15,30 +15,15 @@ export default function OpengraphImage() {
           flexDirection: "column",
           justifyContent: "center",
           padding: 90,
-          background: "linear-gradient(135deg, #09090b 0%, #0f1b3d 100%)",
+          background: "#000000",
           color: "white",
         }}
       >
-        <div
-          style={{
-            width: 120,
-            height: 120,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            background: "#2563eb",
-            borderRadius: 26,
-            fontSize: 62,
-            marginBottom: 48,
-          }}
-        >
-          CR
-        </div>
         <div style={{ fontSize: 76, lineHeight: 1.1 }}>Camilo Rojas Baeza</div>
-        <div style={{ fontSize: 38, color: "#93c5fd", marginTop: 20 }}>
+        <div style={{ fontSize: 38, color: "#8e8e93", marginTop: 20 }}>
           Ingeniero en Informática · Desarrollador Full-Stack
         </div>
-        <div style={{ fontSize: 28, color: "#a1a1aa", marginTop: 48 }}>
+        <div style={{ fontSize: 28, color: "#5a5a60", marginTop: 48 }}>
           camilo-rojas.dev
         </div>
       </div>
