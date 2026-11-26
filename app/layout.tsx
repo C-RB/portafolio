@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, Geist_Mono } from "next/font/google";
 import Providers from "@/components/Providers";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
@@ -53,7 +53,7 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`dark ${geistSans.variable} ${geistMono.variable} antialiased`}
+      className={`dark ${inter.variable} ${geistMono.variable} antialiased`}
       suppressHydrationWarning
     >
       <head>
@@ -63,7 +63,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="min-h-screen bg-white text-zinc-900 dark:bg-[#09090b] dark:text-zinc-50 overflow-x-hidden">
+      <body className="min-h-screen bg-background text-foreground overflow-x-hidden">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

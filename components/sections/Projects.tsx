@@ -3,235 +3,87 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { ExternalLink, Github, ArrowUpRight, X, ChevronLeft, ChevronRight, Images } from "lucide-react";
-import { projects, type Project, type ProjectAccent } from "@/data/projects";
-import SectionTitle from "@/components/ui/SectionTitle";
-import Badge from "@/components/ui/Badge";
+import { X, ChevronLeft, ChevronRight } from "lucide-react";
+import { projects, type Project } from "@/data/projects";
+import { LAYOUTS } from "@/components/sections/ProjectVisuals";
+import Glow from "@/components/ui/Glow";
+import Icon from "@/components/ui/Icon";
+import Reveal from "@/components/ui/Reveal";
+import Scaled from "@/components/ui/Scaled";
+import SectionHeading from "@/components/ui/SectionHeading";
 import { useLanguage } from "@/lib/language-context";
 
-const ACCENT_STYLES: Record<
-  ProjectAccent,
-  { bg: string; icon: string; glow: string }
-> = {
-  emerald: {
-    bg: "from-emerald-100/60 via-zinc-50 to-emerald-50 dark:from-emerald-900/40 dark:via-zinc-900 dark:to-emerald-950/30",
-    icon: "text-emerald-600/80 dark:text-emerald-400/70",
-    glow: "bg-emerald-500/10",
-  },
-  indigo: {
-    bg: "from-indigo-100/60 via-zinc-50 to-indigo-50 dark:from-indigo-900/40 dark:via-zinc-900 dark:to-indigo-950/30",
-    icon: "text-indigo-600/80 dark:text-indigo-400/70",
-    glow: "bg-indigo-500/10",
-  },
-  purple: {
-    bg: "from-purple-100/60 via-zinc-50 to-purple-50 dark:from-purple-900/40 dark:via-zinc-900 dark:to-purple-950/30",
-    icon: "text-purple-600/80 dark:text-purple-400/70",
-    glow: "bg-purple-500/10",
-  },
-  orange: {
-    bg: "from-orange-100/60 via-zinc-50 to-orange-50 dark:from-orange-900/40 dark:via-zinc-900 dark:to-orange-950/30",
-    icon: "text-orange-600/80 dark:text-orange-400/70",
-    glow: "bg-orange-500/10",
-  },
-  cyan: {
-    bg: "from-cyan-100/60 via-zinc-50 to-cyan-50 dark:from-cyan-900/40 dark:via-zinc-900 dark:to-cyan-950/30",
-    icon: "text-cyan-600/80 dark:text-cyan-400/70",
-    glow: "bg-cyan-500/10",
-  },
-  rose: {
-    bg: "from-rose-100/60 via-zinc-50 to-rose-50 dark:from-rose-900/40 dark:via-zinc-900 dark:to-rose-950/30",
-    icon: "text-rose-600/80 dark:text-rose-400/70",
-    glow: "bg-rose-500/10",
-  },
-};
-
-function ProjectPlaceholder({ project, category }: { project: Project; category: string }) {
-  const { icon: Icon, accent } = project;
-  const styles = ACCENT_STYLES[accent];
-
-  return (
-    <div
-      className={`relative w-full h-full bg-gradient-to-br ${styles.bg} flex items-center justify-center overflow-hidden`}
-    >
-      <div className={`absolute w-40 h-40 rounded-full blur-3xl ${styles.glow}`} />
-      {!project.preview && (
-        <div className="relative flex flex-col items-center gap-2">
-          <Icon size={40} strokeWidth={1.5} className={styles.icon} />
-          <span className="text-[10px] uppercase tracking-widest text-zinc-500 dark:text-zinc-500/80 font-medium">
-            {category}
-          </span>
-        </div>
-      )}
-    </div>
-  );
-}
-
-function ProjectPreviewImages({ project }: { project: Project }) {
-  const { preview, name } = project;
-  if (!preview) return null;
-
-  if (preview.type === "web") {
-    return (
-      <div className="pointer-events-none absolute inset-x-[10%] top-[14%] rounded-t-lg overflow-hidden shadow-xl shadow-zinc-900/20 dark:shadow-black/50 ring-1 ring-zinc-900/10 dark:ring-white/10 transition-transform duration-300 group-hover:-translate-y-1">
-        <Image
-          src={preview.image}
-          alt={name}
-          width={1906}
-          height={927}
-          sizes="(max-width: 768px) 80vw, 400px"
-          className="w-full h-auto"
-        />
-      </div>
-    );
-  }
-
-  return (
-    <div className="pointer-events-none absolute inset-0 flex items-center justify-center gap-2.5 sm:gap-3 transition-transform duration-300 group-hover:-translate-y-1">
-      {preview.images.map((src, i) => {
-        const isCenter = i === 1;
-        return (
-          <div
-            key={src}
-            className={`relative aspect-[427/943] rounded-xl overflow-hidden shadow-lg shadow-zinc-900/20 dark:shadow-black/50 ring-1 ring-zinc-900/10 dark:ring-white/10 ${
-              isCenter ? "h-[88%] z-10" : "h-[74%] translate-y-[8%]"
-            }`}
-          >
-            <Image
-              src={src}
-              alt={`${name} ${i + 1}`}
-              fill
-              sizes="120px"
-              className="object-cover"
-            />
-          </div>
-        );
-      })}
-    </div>
-  );
-}
-
-function ProjectCard({
-  project,
-  index,
-  onOpenGallery,
-}: {
-  project: Project;
-  index: number;
-  onOpenGallery: (project: Project) => void;
-}) {
-  const [hovered, setHovered] = useState(false);
-  const [stackExpanded, setStackExpanded] = useState(false);
+function ProjectText({ project, onOpen }: { project: Project; onOpen: () => void }) {
   const { lang, t } = useLanguage();
-  const hasGallery = project.images.length > 0;
-  const hiddenStack = project.stack.slice(5);
 
   return (
-    <motion.article
-      className="glass group rounded-2xl overflow-hidden flex flex-col transition-all duration-300 hover:border-zinc-300 dark:hover:border-zinc-700/60 hover:shadow-xl hover:shadow-zinc-300/50 dark:hover:shadow-zinc-950/50"
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-40px" }}
-      transition={{ duration: 0.55, delay: index * 0.08 }}
-      onHoverStart={() => setHovered(true)}
-      onHoverEnd={() => setHovered(false)}
+    <div className="flex w-full max-w-[390px] flex-col items-start">
+      <p className="font-mono text-[13px] uppercase tracking-[0.04em] text-white/80">{project.category[lang]}</p>
+      <h3 className="mt-6 text-5xl font-semibold tracking-[-0.04em] lg:text-[64px] lg:leading-[1.2]">{project.name}</h3>
+      <p className="mt-5 text-[17px] leading-[27px] text-white/80">{project.problem[lang]}</p>
+      <ul className="mt-7 flex flex-wrap gap-2">
+        {project.stack.slice(0, 5).map((tech) => (
+          <li key={tech} className="rounded-full border border-white/20 bg-white/10 px-3.5 py-1.5 text-[13px] font-medium">
+            {tech}
+          </li>
+        ))}
+      </ul>
+      <button
+        type="button"
+        onClick={(e) => {
+          e.stopPropagation();
+          onOpen();
+        }}
+        className="mt-8 flex items-center gap-2.5 rounded-full bg-white px-[26px] py-[15px] text-[15px] font-semibold text-black transition-all hover:gap-3.5 hover:opacity-85 active:scale-[0.97] cursor-pointer"
+      >
+        {t.projects.demo}
+        <Icon name="arrow-up-right" size={16} />
+      </button>
+    </div>
+  );
+}
+
+const zoom =
+  "origin-center transition-transform duration-300 group-hover:scale-[1.03] motion-reduce:transform-none";
+
+function ProjectPanel({ project, onOpen }: { project: Project; onOpen: () => void }) {
+  const layout = LAYOUTS[project.id];
+  const textOnRight = layout.textLeft > 640;
+  const { box } = layout;
+  const [from, to] = project.colors;
+
+  return (
+    <article
+      onClick={onOpen}
+      className="group relative overflow-hidden rounded-[28px] border border-white/35 text-white transition-transform duration-300 hover:-translate-y-1 motion-reduce:transform-none lg:rounded-[40px] cursor-pointer"
+      style={{ background: `linear-gradient(to bottom, ${from}, ${to})` }}
     >
-      {/* Image area */}
-      <div className="relative w-full aspect-[16/9] overflow-hidden bg-zinc-100 dark:bg-zinc-900">
-        <ProjectPlaceholder project={project} category={project.category[lang]} />
-        <ProjectPreviewImages project={project} />
-
-        {hasGallery && (
-          <button
-            type="button"
-            onClick={() => onOpenGallery(project)}
-            aria-label={t.projects.demo}
-            className="absolute inset-0 w-full h-full"
-          >
-            {/* Overlay on hover (desktop) */}
-            <AnimatePresence>
-              {hovered && (
-                <motion.div
-                  className="absolute inset-0 bg-white/90 dark:bg-zinc-950/80 flex items-center justify-center gap-3"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <span className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-blue-600 text-white text-xs font-semibold">
-                    <Images size={13} />
-                    {t.projects.demo}
-                  </span>
-                </motion.div>
-              )}
-            </AnimatePresence>
-
-            {/* Persistent hint (mobile, no hover) */}
-            <span className="absolute bottom-2 right-2 sm:hidden flex items-center gap-1 px-2.5 py-1 rounded-full bg-black/60 text-white text-[10px] font-medium">
-              <Images size={11} />
-              {t.projects.demo}
-            </span>
-          </button>
-        )}
+      {/* Desktop: the design canvas, scaled to the panel width */}
+      <div className="hidden lg:block">
+        <Scaled width={1280} height={580}>
+          <Glow name={`panel-glow-${project.id}`} x={textOnRight ? -381 : 519} y={-441} w={1060} h={860} />
+          <Glow name="panel-glow-shade" x={textOnRight ? 539 : -261} y={359} w={920} h={720} />
+          <div className={`absolute inset-0 ${zoom}`}>{layout.render(project)}</div>
+          <div className="absolute" style={{ left: layout.textLeft, top: layout.textTop, width: 390 }}>
+            <ProjectText project={project} onOpen={onOpen} />
+          </div>
+        </Scaled>
       </div>
 
-      {/* Content */}
-      <div className="flex flex-col flex-1 p-5 gap-3">
-        <div>
-          <h3 className="font-bold text-zinc-900 dark:text-zinc-100 text-base group-hover:text-black dark:group-hover:text-white transition-colors">
-            {project.name}
-          </h3>
-          <p className="text-xs text-zinc-500 dark:text-zinc-500 font-medium mt-0.5">
-            {project.tagline[lang]}
-          </p>
+      {/* Smaller screens: text first, visual below */}
+      <div className="flex flex-col gap-8 lg:hidden">
+        <div className="px-6 pt-8 sm:px-10">
+          <ProjectText project={project} onOpen={onOpen} />
         </div>
-
-        {/* Problem it solves */}
-        <p className="text-sm text-blue-700/90 dark:text-blue-300/90 leading-relaxed line-clamp-4">
-          {project.problem[lang]}
-        </p>
-
-        {/* Full description */}
-        <p className="text-xs text-zinc-600 dark:text-zinc-500 leading-relaxed line-clamp-3">
-          {project.description[lang]}
-        </p>
-
-        {/* Stack */}
-        <div className="flex flex-wrap gap-1.5 mt-auto pt-1">
-          {(stackExpanded ? project.stack : project.stack.slice(0, 5)).map((tech) => (
-            <Badge key={tech} color="zinc">
-              {tech}
-            </Badge>
-          ))}
-          {hiddenStack.length > 0 && (
-            <button
-              type="button"
-              onClick={() => setStackExpanded((v) => !v)}
-              title={hiddenStack.join(", ")}
-              className="px-2 py-0.5 rounded-full text-[11px] font-medium bg-zinc-200/70 dark:bg-zinc-800/70 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-300/70 dark:hover:bg-zinc-700/70 transition-colors"
-            >
-              {stackExpanded ? t.projects.showLess : `+${hiddenStack.length}`}
-            </button>
-          )}
-        </div>
-
-        {/* Category + Links */}
-        <div className="flex items-center justify-between pt-2 border-t border-zinc-200 dark:border-zinc-800/60">
-          <Badge color="blue">{project.category[lang]}</Badge>
-          {hasGallery && (
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={() => onOpenGallery(project)}
-                className="p-1.5 rounded-lg text-zinc-500 dark:text-zinc-600 hover:text-zinc-900 dark:hover:text-zinc-200 hover:bg-zinc-200/60 dark:hover:bg-zinc-800/60 transition-colors"
-                aria-label={t.projects.demo}
-              >
-                <ExternalLink size={15} />
-              </button>
+        <div className="mx-auto w-full max-w-[640px] px-4 pb-4">
+          <Scaled width={box.width} height={box.height}>
+            <div className="absolute h-[580px] w-[1280px]" style={{ left: -box.x, top: -box.y }}>
+              {layout.render(project)}
             </div>
-          )}
+          </Scaled>
         </div>
       </div>
-    </motion.article>
+    </article>
   );
 }
 
@@ -243,7 +95,7 @@ function ProjectGalleryModal({
   onClose: () => void;
 }) {
   const [index, setIndex] = useState(0);
-  const { lang, t } = useLanguage();
+  const { t } = useLanguage();
   const images = project.images;
   const hasImages = images.length > 0;
 
@@ -267,7 +119,7 @@ function ProjectGalleryModal({
 
   return (
     <motion.div
-      className="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex flex-col items-center justify-center p-4 sm:p-8"
+      className="fixed inset-0 z-[60] bg-black/85 backdrop-blur-sm flex flex-col items-center justify-center p-4 sm:p-8"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -325,16 +177,7 @@ function ProjectGalleryModal({
             )}
           </div>
         ) : (
-          <div
-            className="w-full aspect-[16/9] rounded-xl overflow-hidden"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <ProjectPlaceholder project={project} category={project.category[lang]} />
-          </div>
-        )}
-
-        {!hasImages && (
-          <p className="text-zinc-400 text-xs">{t.projects.noImages}</p>
+          <p className="text-zinc-400 text-sm py-16">{t.projects.noImages}</p>
         )}
       </div>
     </motion.div>
@@ -346,61 +189,22 @@ export default function Projects() {
   const [galleryProject, setGalleryProject] = useState<Project | null>(null);
 
   return (
-    <section id="projects" className="py-24 sm:py-32 relative overflow-hidden">
-      {/* Subtle bg */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute -left-20 top-1/3 w-72 h-72 bg-blue-600/5 rounded-full blur-[100px]" />
-        <div className="absolute -right-20 bottom-1/3 w-72 h-72 bg-blue-500/5 rounded-full blur-[100px]" />
-      </div>
+    <section id="projects" className="relative">
+      <div className="mx-auto max-w-[1440px] px-5 pb-20 pt-20 lg:px-20 lg:pt-[140px]">
+        <SectionHeading title={t.projects.title} description={t.projects.description} />
 
-      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="flex flex-col gap-12">
-          <SectionTitle
-            label={t.projects.eyebrow}
-            title={t.projects.title}
-            highlight={t.projects.highlight}
-            description={t.projects.description}
-          />
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {projects.map((project, i) => (
-              <ProjectCard
-                key={project.id}
-                project={project}
-                index={i}
-                onOpenGallery={setGalleryProject}
-              />
-            ))}
-          </div>
-
-          {/* GitHub CTA */}
-          <motion.div
-            className="flex justify-center"
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            <a
-              href="https://github.com/C-RB"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2.5 px-6 py-3 rounded-xl glass glass-hover text-sm text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 font-medium transition-all"
-            >
-              <Github size={16} />
-              {t.projects.viewMore}
-              <ArrowUpRight size={14} />
-            </a>
-          </motion.div>
+        <div className="mt-14 flex flex-col gap-7 lg:mt-24">
+          {projects.map((project) => (
+            <Reveal key={project.id}>
+              <ProjectPanel project={project} onOpen={() => setGalleryProject(project)} />
+            </Reveal>
+          ))}
         </div>
       </div>
 
       <AnimatePresence>
         {galleryProject && (
-          <ProjectGalleryModal
-            project={galleryProject}
-            onClose={() => setGalleryProject(null)}
-          />
+          <ProjectGalleryModal project={galleryProject} onClose={() => setGalleryProject(null)} />
         )}
       </AnimatePresence>
     </section>

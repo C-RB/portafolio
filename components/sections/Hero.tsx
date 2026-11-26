@@ -1,211 +1,124 @@
 "use client";
 
-import { motion, type Variants, type Transition } from "framer-motion";
-import { Github, Linkedin, Mail, ArrowDown } from "lucide-react";
-import type { ComponentType } from "react";
-import {
-  SiReact, SiNextdotjs, SiTypescript, SiPython,
-  SiNodedotjs, SiPostgresql, SiMysql, SiMongodb,
-  SiGit, SiTailwindcss,
-} from "react-icons/si";
+import { motion, type Variants } from "framer-motion";
+import Orbit from "@/components/sections/Orbit";
+import Glow, { GlowLayer } from "@/components/ui/Glow";
+import Icon from "@/components/ui/Icon";
 import { useLanguage } from "@/lib/language-context";
 import { useMailto } from "@/lib/use-mailto";
 
-const containerVariants: Variants = {
+const ease = [0.25, 0.1, 0.25, 1] as const;
+
+const title: Variants = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.1, delayChildren: 0.15 } },
+  visible: { transition: { staggerChildren: 0.12, delayChildren: 0.1 } },
 };
 
-const itemTransition: Transition = { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] };
-
-const itemVariants: Variants = {
+const word: Variants = {
   hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: itemTransition },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease } },
 };
 
-type OrbDef = {
-  Icon: ComponentType<{ size?: number; color?: string; opacity?: number }>;
-  color: string;
-  top?: string;
-  bottom?: string;
-  left?: string;
-  right?: string;
-  delay: number;
-  duration: number;
-  yRange: number;
-  size: number;
-};
-
-const orbs: OrbDef[] = [
-  // Left column — distributed top to bottom
-  { Icon: SiReact,       color: "#61DAFB", top: "14%",    left: "4%",   delay: 0,    duration: 6.0, yRange: 18, size: 22 },
-  { Icon: SiPython,      color: "#3776AB", top: "44%",    left: "3%",   delay: 1.1,  duration: 5.5, yRange: 22, size: 20 },
-  { Icon: SiMongodb,     color: "#47A248", bottom: "16%", left: "6%",   delay: 1.8,  duration: 6.5, yRange: 16, size: 18 },
-
-  // Right column — distributed top to bottom
-  { Icon: SiTypescript,  color: "#3178C6", top: "18%",    right: "4%",  delay: 0.6,  duration: 7.0, yRange: 16, size: 20 },
-  { Icon: SiNodedotjs,   color: "#539E43", top: "50%",    right: "3%",  delay: 0.8,  duration: 7.5, yRange: 20, size: 20 },
-  { Icon: SiMysql,       color: "#4479A1", bottom: "14%", right: "6%",  delay: 1.2,  duration: 5.0, yRange: 18, size: 18 },
-
-  // Top row — spread horizontally (kept clear of the fixed navbar)
-  { Icon: SiGit,         color: "#F05032", top: "17%",    left: "20%",  delay: 0.3,  duration: 7.0, yRange: 12, size: 17 },
-  { Icon: SiTailwindcss, color: "#06B6D4", top: "17%",    right: "20%", delay: 1.6,  duration: 6.5, yRange: 14, size: 17 },
-
-  // Bottom row — spread horizontally
-  { Icon: SiNextdotjs,   color: "#ffffff", bottom: "7%",  left: "27%",  delay: 0.4,  duration: 8.0, yRange: 18, size: 20 },
-  { Icon: SiPostgresql,  color: "#336791", bottom: "7%",  right: "27%", delay: 1.4,  duration: 6.5, yRange: 14, size: 18 },
-];
-
-function FloatingOrb({ Icon, color, top, bottom, left, right, delay, duration, yRange, size }: OrbDef) {
-  return (
-    <motion.div
-      className="absolute pointer-events-none"
-      style={{ top, bottom, left, right }}
-      initial={{ opacity: 0, scale: 0.6 }}
-      animate={{
-        opacity: [0, 1, 1],
-        scale: [0.6, 1, 1],
-        y: [0, -yRange, 0],
-      }}
-      transition={{
-        opacity:  { duration: 1.2, delay, times: [0, 1, 1] },
-        scale:    { duration: 1.2, delay, times: [0, 1, 1] },
-        y:        { duration, delay: delay + 1, repeat: Infinity, ease: "easeInOut" },
-      }}
-    >
-      <div
-        className="rounded-2xl backdrop-blur-sm flex items-center justify-center"
-        style={{
-          width: size + 28,
-          height: size + 28,
-          backgroundColor: `${color}26`,
-          border: `1.5px solid ${color}55`,
-          boxShadow: `0 6px 28px ${color}45, 0 0 0 1px ${color}14 inset`,
-        }}
-      >
-        <Icon size={size} color={color} />
-      </div>
-    </motion.div>
-  );
-}
+const rise = (delay: number) => ({
+  initial: { opacity: 0, y: 24 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.6, ease, delay },
+});
 
 export default function Hero() {
   const { t } = useLanguage();
   const mailHref = useMailto("c.rojas22", "ufromail.cl");
-  const scrollTo = (id: string) =>
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+
+  const socials = [
+    { name: "github", label: "GitHub", href: "https://github.com/C-RB" },
+    { name: "linkedin", label: "LinkedIn", href: "https://www.linkedin.com/in/camilo-rojas-baeza-0810ba374/" },
+    { name: "mail", label: "Email", href: mailHref },
+  ];
 
   return (
-    <section
-      id="hero"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
-    >
-      {/* Background blobs */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-1/3 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[150px]" />
-        <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-blue-500/7 rounded-full blur-[130px]" />
-
-        {/* Floating orbs (hidden on narrow screens — no side gutter for them to sit in) */}
-        <div className="hidden sm:block">
-          {orbs.map((orb, i) => (
-            <FloatingOrb key={i} {...orb} />
-          ))}
-        </div>
-      </div>
+    <section id="hero" className="relative min-h-[max(827px,100svh)]">
+      <GlowLayer>
+        <Glow name="hero-glow-1" x={340} y={-420} w={1220} h={920} />
+        <Glow name="hero-glow-2" x={810} y={-10} w={900} />
+        <Glow name="hero-glow-3" x={590} y={390} w={760} />
+        <Glow name="hero-glow-4" x={1020} y={460} w={700} />
+      </GlowLayer>
 
       <motion.div
-        className="relative z-10 w-full max-w-2xl mx-auto px-4 sm:px-6 pt-28 pb-16 flex flex-col items-center text-center gap-6"
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
+        className="pointer-events-none absolute -right-[390px] -top-[270px] -z-10 origin-center scale-50 opacity-70 md:-right-[240px] md:scale-75 lg:left-[calc(50%+80px)] lg:right-auto lg:top-[105px] lg:origin-left lg:scale-[0.8] lg:opacity-100 min-[1360px]:scale-100"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.2, delay: 0.3 }}
       >
-        {/* Label */}
-        <motion.div variants={itemVariants} className="flex items-center gap-3">
-          <div className="w-6 h-px bg-blue-500/50" />
-          <p className="text-[11px] font-semibold tracking-widest text-blue-600 dark:text-blue-400 uppercase">
-            {t.hero.eyebrow}
-          </p>
-          <div className="w-6 h-px bg-blue-500/50" />
-        </motion.div>
+        <div className="max-lg:opacity-40">
+          <Orbit />
+        </div>
+      </motion.div>
 
-        {/* Name */}
+      <div className="mx-auto flex max-w-[1440px] flex-col items-start px-5 pb-10 pt-40 lg:px-20 lg:pt-[250px]">
         <motion.h1
-          variants={itemVariants}
-          className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05] text-zinc-900 dark:text-zinc-50"
+          className="text-[clamp(56px,10.28vw,148px)] font-semibold leading-[0.92] tracking-[-0.055em]"
+          variants={title}
+          initial="hidden"
+          animate="visible"
+          aria-label="Camilo Rojas Baeza"
         >
-          Camilo <span className="gradient-text">Rojas Baeza</span>
+          <span aria-hidden className="block">
+            <motion.span variants={word} className="title-gradient-top inline-block pr-[0.06em]">
+              Camilo
+            </motion.span>
+          </span>
+          <span aria-hidden className="flex flex-wrap gap-x-[0.22em]">
+            {["Rojas", "Baeza"].map((name) => (
+              <motion.span key={name} variants={word} className="title-gradient-bottom inline-block pb-[0.08em] pr-[0.06em]">
+                {name}
+              </motion.span>
+            ))}
+          </span>
         </motion.h1>
 
-        {/* Role */}
-        <motion.p
-          variants={itemVariants}
-          className="text-sm text-zinc-600 dark:text-zinc-500 font-medium tracking-wide"
-        >
-          {t.hero.role} &nbsp;·&nbsp; {t.hero.university}
-        </motion.p>
+        <motion.div className="mt-8 flex flex-col gap-6 sm:mt-11 sm:flex-row sm:gap-16" {...rise(0.5)}>
+          <div className="flex flex-col gap-1.5 text-[22px] leading-[1.2] tracking-[-0.015em] whitespace-nowrap">
+            <p className="font-medium text-strong">{t.hero.role}</p>
+            <p className="text-dim">{t.hero.focus}</p>
+          </div>
+          <p className="max-w-[360px] text-[17px] leading-[27px] text-muted">{t.hero.bio}</p>
+        </motion.div>
 
-        {/* Divider */}
-        <motion.div variants={itemVariants} className="w-8 h-px bg-zinc-300 dark:bg-zinc-800" />
-
-        {/* Bio */}
-        <motion.p
-          variants={itemVariants}
-          className="text-[15px] text-zinc-600 dark:text-zinc-400 leading-relaxed"
-        >
-          {t.hero.bio}
-        </motion.p>
-
-        {/* CTAs */}
-        <motion.div
-          variants={itemVariants}
-          className="flex flex-wrap gap-3 justify-center pt-2"
-        >
-          <motion.button
-            onClick={() => scrollTo("projects")}
-            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold transition-colors shadow-lg shadow-blue-500/20 cursor-pointer"
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
+        <motion.div className="mt-12 flex flex-wrap items-center gap-7" {...rise(0.62)}>
+          <button
+            type="button"
+            onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}
+            className="flex items-center gap-3 rounded-full bg-solid px-[30px] py-[17px] text-[15px] font-semibold text-solid-fg transition-all hover:gap-4 hover:opacity-85 active:scale-[0.97] cursor-pointer"
           >
-            {t.hero.ctaProjects} <ArrowDown size={13} />
-          </motion.button>
-          <motion.a
+            {t.hero.ctaProjects}
+            <Icon name="arrow-right" size={16} />
+          </button>
+          <a
             href="/CV_Camilo_Rojas_Baeza.pdf"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl border border-zinc-300 dark:border-zinc-700/60 hover:border-zinc-400 dark:hover:border-zinc-600 hover:bg-zinc-100 dark:hover:bg-zinc-800/40 text-zinc-700 dark:text-zinc-300 text-sm font-semibold transition-all cursor-pointer"
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
+            className="flex items-center gap-2 text-[15px] font-semibold transition hover:opacity-70 active:scale-[0.97]"
           >
             {t.hero.ctaCv}
-          </motion.a>
+            <Icon name="download" size={15} />
+          </a>
+          <div className="flex items-center gap-[18px] text-muted">
+            {socials.map((social) => (
+              <a
+                key={social.name}
+                href={social.href}
+                target={social.href.startsWith("http") ? "_blank" : undefined}
+                rel="noopener noreferrer"
+                aria-label={social.label}
+                className="transition hover:-translate-y-0.5 hover:text-strong"
+              >
+                <Icon name={social.name} />
+              </a>
+            ))}
+          </div>
         </motion.div>
-
-        {/* Social */}
-        <motion.div variants={itemVariants} className="flex items-center gap-6 pt-1">
-          <a
-            href="https://github.com/C-RB"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1.5 text-sm text-zinc-500 dark:text-zinc-600 hover:text-zinc-800 dark:hover:text-zinc-300 transition-colors"
-          >
-            <Github size={14} /> {t.hero.github}
-          </a>
-          <a
-            href="https://www.linkedin.com/in/camilo-rojas-baeza-0810ba374/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1.5 text-sm text-zinc-500 dark:text-zinc-600 hover:text-zinc-800 dark:hover:text-zinc-300 transition-colors"
-          >
-            <Linkedin size={14} /> {t.hero.linkedin}
-          </a>
-          <a
-            href={mailHref}
-            className="flex items-center gap-1.5 text-sm text-zinc-500 dark:text-zinc-600 hover:text-zinc-800 dark:hover:text-zinc-300 transition-colors"
-          >
-            <Mail size={14} /> {t.hero.email}
-          </a>
-        </motion.div>
-      </motion.div>
+      </div>
     </section>
   );
 }

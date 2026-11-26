@@ -9,63 +9,47 @@ export type Dictionary = {
     stack: string;
     projects: string;
     contact: string;
+    available: string;
   };
   hero: {
-    eyebrow: string;
     role: string;
-    university: string;
+    focus: string;
     bio: string;
     ctaProjects: string;
-    ctaContact: string;
     ctaCv: string;
-    github: string;
-    linkedin: string;
-    email: string;
   };
   about: {
     eyebrow: string;
-    title: string;
-    highlight: string;
-    bio1: TextSegment[];
-    bio2: TextSegment[];
+    statement: TextSegment[];
     eduName: string;
     eduDegree: string;
-    eduBadge: string;
+    city: string;
+    cityDesc: string;
+    open: string;
+    openDesc: string;
   };
   stack: {
-    eyebrow: string;
-    title: string;
-    highlight: string;
+    title: [string, string];
     description: string;
+    groups: { frontend: string; backend: string; data: string; devops: string };
   };
   projects: {
-    eyebrow: string;
-    title: string;
-    highlight: string;
+    title: [string, string];
     description: string;
-    featured: string;
     demo: string;
-    code: string;
-    viewMore: string;
     closeGallery: string;
     noImages: string;
-    showLess: string;
   };
   contact: {
-    eyebrow: string;
     title: string;
-    highlight: string;
+    availableNow: string;
     description: string;
     talkTitle: string;
     talkDesc: string;
-    github: string;
-    linkedin: string;
-    email: string;
     emailCta: string;
-    location: string;
     locationValue: string;
-    availableNow: string;
-    availableDesc: string;
+    formTitle: string;
+    formHint: string;
     formName: string;
     formNamePlaceholder: string;
     formEmail: string;
@@ -87,94 +71,63 @@ export const translations: Record<Lang, Dictionary> = {
     nav: {
       home: "Inicio",
       about: "Sobre mí",
-      stack: "Tecnologías",
+      stack: "Stack",
       projects: "Proyectos",
       contact: "Contacto",
+      available: "Disponible",
     },
     hero: {
-      eyebrow: "Desarrollador de Software",
-      role: "Ingeniero Informático en Formación",
-      university: "Universidad de La Frontera, Chile",
-      bio: "Estudiante de quinto año especializado en desarrollo Full Stack y arquitectura de software. Cuento con experiencia práctica en proyectos reales desde la toma de requerimientos hasta el despliegue en producción.",
+      role: "Software Developer",
+      focus: "Full Stack · Arquitectura",
+      bio: "Quinto año de Ingeniería Informática en la Universidad de La Frontera. Llevo productos desde el requerimiento hasta producción.",
       ctaProjects: "Ver proyectos",
-      ctaContact: "Contactarme",
       ctaCv: "Descargar CV",
-      github: "GitHub",
-      linkedin: "LinkedIn",
-      email: "Email",
     },
     about: {
       eyebrow: "Sobre mí",
-      title: "Conóceme un",
-      highlight: "poco más.",
-      bio1: [
-        { text: "Estudiante de quinto año de Ingeniería Informática en la " },
-        { text: "Universidad de La Frontera, Chile", strong: true },
-        {
-          text: ", con marcado interés en la arquitectura de software, el desarrollo Full Stack y la automatización. He trabajado en proyectos reales facilitando la obtención de requerimientos y el despliegue de soluciones, manteniendo un enfoque constante en la calidad y el cumplimiento de metas.",
-        },
-      ] as TextSegment[],
-      bio2: [
-        {
-          text: "Me motiva construir soluciones que aporten orden y eficiencia, transformando requerimientos de negocio en software funcional. Busco integrarme a equipos donde pueda aportar valor técnico mientras sigo perfeccionando mis habilidades en ",
-        },
-        { text: "Python", strong: true },
-        { text: ", " },
-        { text: "TypeScript", strong: true },
-        { text: " y " },
-        { text: "React / Next.js", strong: true },
-        { text: "." },
-      ] as TextSegment[],
-      eduName: "Universidad de La Frontera, Chile",
-      eduDegree: "Ingeniería Informática · 2022 – Presente",
-      eduBadge: "5° año",
+      statement: [
+        { text: "Me apasiona " },
+        { text: "convertir requerimientos de negocio en software que ordena y simplifica.", strong: true },
+        { text: " Trabajo entre la arquitectura y el producto, y mis herramientas de todos los días son " },
+        { text: "Python, TypeScript y React / Next.js.", strong: true },
+      ],
+      eduName: "Universidad de La Frontera",
+      eduDegree: "Ingeniería Informática · 5.º año",
+      city: "Temuco, Chile",
+      cityDesc: "Disponible para trabajo remoto",
+      open: "Abierto a oportunidades",
+      openDesc: "Freelance y tiempo completo",
     },
     stack: {
-      eyebrow: "Tecnologías",
-      title: "Herramientas con las que",
-      highlight: "trabajo.",
+      title: ["Herramientas que", "uso todos los días."],
       description:
-        "Cada tecnología cumple un rol concreto. Acá te explico qué hace cada una, aunque no seas técnico.",
+        "Cada tecnología cumple un rol concreto en el producto. Así se reparten entre frontend, backend, datos y despliegue.",
+      groups: { frontend: "Frontend", backend: "Backend", data: "Datos", devops: "Mobile y DevOps" },
     },
     projects: {
-      eyebrow: "Proyectos",
-      title: "Lo que he",
-      highlight: "construido.",
-      description:
-        "Una selección de proyectos que representan mis áreas de trabajo: plataformas web, backends, sistemas de gestión y herramientas con impacto real.",
-      featured: "Destacado",
-      demo: "Ver Proyecto",
-      code: "Código",
-      viewMore: "Ver más en GitHub",
+      title: ["Cinco productos,", "cinco problemas reales."],
+      description: "Cada proyecto nació de un problema concreto. Acá cuento cuál era y cómo lo resolví.",
+      demo: "Ver proyecto",
       closeGallery: "Cerrar",
       noImages: "Capturas próximamente",
-      showLess: "ver menos",
     },
     contact: {
-      eyebrow: "Contacto",
-      title: "¿Tienes un proyecto",
-      highlight: "en mente?",
-      description:
-        "Estoy disponible para proyectos freelance, colaboraciones y oportunidades a tiempo completo. Cuéntame tu idea.",
-      talkTitle: "Hablemos directamente",
-      talkDesc:
-        "Prefiero responder rápido. Si tienes algo concreto en mente, escríbeme por cualquiera de estos canales y lo conversamos sin rodeos.",
-      github: "GitHub",
-      linkedin: "LinkedIn",
-      emailCta: "Escríbeme un correo",
-      email: "Email",
-      location: "Ubicación",
-      locationValue: "Chile · Disponible remoto",
+      title: "Hablemos.",
       availableNow: "Disponible ahora",
-      availableDesc: "Para proyectos freelance y oportunidades",
+      description: "¿Tienes un proyecto, una vacante o una idea? Cuéntamela y te respondo en menos de 24 horas.",
+      talkTitle: "Contacto directo",
+      talkDesc: "Si prefieres, escríbeme por cualquiera de estos canales.",
+      emailCta: "Escríbeme un correo",
+      locationValue: "Temuco, Chile · trabajo remoto",
+      formTitle: "Envíame un mensaje",
+      formHint: "Todos los campos son obligatorios.",
       formName: "Nombre",
       formNamePlaceholder: "Tu nombre",
       formEmail: "Email",
       formSubject: "Asunto",
       formSubjectPlaceholder: "¿De qué trata tu proyecto?",
       formMessage: "Mensaje",
-      formMessagePlaceholder:
-        "Cuéntame qué necesitas construir, cuál es el problema y cuándo quieres empezar...",
+      formMessagePlaceholder: "Cuéntame qué necesitas construir, cuál es el problema y para cuándo lo necesitas.",
       sendButton: "Enviar mensaje",
       sending: "Enviando...",
       sentTitle: "¡Mensaje enviado!",
@@ -187,94 +140,63 @@ export const translations: Record<Lang, Dictionary> = {
     nav: {
       home: "Home",
       about: "About",
-      stack: "Tech Stack",
+      stack: "Stack",
       projects: "Projects",
       contact: "Contact",
+      available: "Available",
     },
     hero: {
-      eyebrow: "Software Developer",
-      role: "Computer Engineering Student",
-      university: "Universidad de La Frontera, Chile",
-      bio: "Fifth-year student specialized in Full Stack development and software architecture. I have hands-on experience in real projects from gathering requirements to production deployment.",
+      role: "Software Developer",
+      focus: "Full Stack · Architecture",
+      bio: "Fifth-year Computer Engineering student at Universidad de La Frontera. I take products from requirements to production.",
       ctaProjects: "View projects",
-      ctaContact: "Contact me",
       ctaCv: "Download CV",
-      github: "GitHub",
-      linkedin: "LinkedIn",
-      email: "Email",
     },
     about: {
       eyebrow: "About me",
-      title: "Get to know",
-      highlight: "me a bit more.",
-      bio1: [
-        { text: "Fifth-year Computer Engineering student at " },
-        { text: "Universidad de La Frontera, Chile", strong: true },
-        {
-          text: ", with a strong interest in software architecture, Full Stack development, and automation. I've worked on real projects, helping gather requirements and deploy solutions, with a constant focus on quality and meeting goals.",
-        },
-      ] as TextSegment[],
-      bio2: [
-        {
-          text: "I'm driven to build solutions that bring order and efficiency, turning business requirements into working software. I'm looking to join teams where I can add technical value while continuing to sharpen my skills in ",
-        },
-        { text: "Python", strong: true },
-        { text: ", " },
-        { text: "TypeScript", strong: true },
-        { text: ", and " },
-        { text: "React / Next.js", strong: true },
-        { text: "." },
-      ] as TextSegment[],
-      eduName: "Universidad de La Frontera, Chile",
-      eduDegree: "Computer Engineering · 2022 – Present",
-      eduBadge: "5th year",
+      statement: [
+        { text: "I love " },
+        { text: "turning business requirements into software that organizes and simplifies.", strong: true },
+        { text: " I work between architecture and product, and my everyday tools are " },
+        { text: "Python, TypeScript, and React / Next.js.", strong: true },
+      ],
+      eduName: "Universidad de La Frontera",
+      eduDegree: "Computer Engineering · 5th year",
+      city: "Temuco, Chile",
+      cityDesc: "Available for remote work",
+      open: "Open to opportunities",
+      openDesc: "Freelance and full time",
     },
     stack: {
-      eyebrow: "Tech Stack",
-      title: "Tools I",
-      highlight: "work with.",
+      title: ["Tools I use", "every day."],
       description:
-        "Each technology plays a specific role. Here's what each one does, even if you're not technical.",
+        "Each technology plays a specific role in the product. Here is how they split across frontend, backend, data, and deployment.",
+      groups: { frontend: "Frontend", backend: "Backend", data: "Data", devops: "Mobile & DevOps" },
     },
     projects: {
-      eyebrow: "Projects",
-      title: "What I've",
-      highlight: "built.",
-      description:
-        "A selection of projects that represent my areas of work: web platforms, backends, management systems, and tools with real impact.",
-      featured: "Featured",
-      demo: "View Project",
-      code: "Code",
-      viewMore: "See more on GitHub",
+      title: ["Five products,", "five real problems."],
+      description: "Every project started from a concrete problem. Here is what it was and how I solved it.",
+      demo: "View project",
       closeGallery: "Close",
       noImages: "Screenshots coming soon",
-      showLess: "show less",
     },
     contact: {
-      eyebrow: "Contact",
-      title: "Got a project",
-      highlight: "in mind?",
-      description:
-        "I'm available for freelance projects, collaborations, and full-time opportunities. Tell me your idea.",
-      talkTitle: "Let's talk directly",
-      talkDesc:
-        "I prefer to respond quickly. If you have something specific in mind, reach out through any of these channels and let's talk it through.",
-      github: "GitHub",
-      linkedin: "LinkedIn",
-      emailCta: "Send me an email",
-      email: "Email",
-      location: "Location",
-      locationValue: "Chile · Available remotely",
+      title: "Let's talk.",
       availableNow: "Available now",
-      availableDesc: "For freelance projects and opportunities",
+      description: "Got a project, an opening, or an idea? Tell me about it and I'll reply within 24 hours.",
+      talkTitle: "Direct contact",
+      talkDesc: "If you prefer, reach me through any of these channels.",
+      emailCta: "Send me an email",
+      locationValue: "Temuco, Chile · remote work",
+      formTitle: "Send me a message",
+      formHint: "All fields are required.",
       formName: "Name",
       formNamePlaceholder: "Your name",
       formEmail: "Email",
       formSubject: "Subject",
       formSubjectPlaceholder: "What's your project about?",
       formMessage: "Message",
-      formMessagePlaceholder:
-        "Tell me what you need to build, what the problem is, and when you'd like to start...",
+      formMessagePlaceholder: "Tell me what you need to build, what the problem is, and when you need it.",
       sendButton: "Send message",
       sending: "Sending...",
       sentTitle: "Message sent!",

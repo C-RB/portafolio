@@ -1,93 +1,63 @@
 "use client";
 
-import { motion } from "framer-motion";
-import {
-  SiPython, SiTypescript,
-  SiReact, SiNextdotjs, SiTailwindcss,
-  SiNodedotjs, SiSpringboot,
-  SiPostgresql, SiMysql, SiMinio,
-  SiUbuntu, SiGit,
-  SiAndroid,
-} from "react-icons/si";
-import { Globe, Coffee } from "lucide-react";
-import type { ComponentType } from "react";
-import { techStack } from "@/data/tech-stack";
-import SectionTitle from "@/components/ui/SectionTitle";
+import Glow, { GlowLayer } from "@/components/ui/Glow";
+import Reveal from "@/components/ui/Reveal";
+import SectionHeading from "@/components/ui/SectionHeading";
+import TechLogo from "@/components/ui/TechLogo";
+import { marqueeStack, techStack } from "@/data/tech-stack";
 import { useLanguage } from "@/lib/language-context";
-import { useTheme } from "@/lib/theme-context";
-
-type IconEntry = {
-  icon: ComponentType<{ size?: number; style?: React.CSSProperties }>;
-  color: string;
-  colorLight?: string;
-};
-
-const iconMap: Record<string, IconEntry> = {
-  "Python":          { icon: SiPython,      color: "#3776AB" },
-  "TypeScript":      { icon: SiTypescript,  color: "#3178C6" },
-  "Java":            { icon: Coffee,        color: "#f89820" },
-  "React":           { icon: SiReact,       color: "#61DAFB" },
-  "Next.js":         { icon: SiNextdotjs,   color: "#e4e4e7", colorLight: "#18181b" },
-  "Tailwind CSS":    { icon: SiTailwindcss, color: "#06B6D4" },
-  "Node.js":         { icon: SiNodedotjs,   color: "#339933" },
-  "Spring Boot":     { icon: SiSpringboot,  color: "#6DB33F" },
-  "APIs REST":       { icon: Globe,         color: "#60a5fa" },
-  "PostgreSQL":      { icon: SiPostgresql,  color: "#4169E1" },
-  "MySQL":           { icon: SiMysql,       color: "#4479A1" },
-  "MinIO":           { icon: SiMinio,       color: "#C72E49" },
-  "Linux / Ubuntu":  { icon: SiUbuntu,      color: "#E95420" },
-  "Git / GitHub":    { icon: SiGit,         color: "#F05032" },
-  "Android":         { icon: SiAndroid,     color: "#3DDC84" },
-};
 
 export default function TechStack() {
   const { t } = useLanguage();
-  const { theme } = useTheme();
+  const groups = Object.keys(techStack) as (keyof typeof techStack)[];
 
   return (
-    <section id="stack" className="min-h-screen flex items-center py-24 sm:py-32 relative overflow-hidden">
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-blue-600/4 rounded-full blur-[140px]" />
-      </div>
+    <section id="stack" className="relative">
+      <GlowLayer>
+        <Glow name="stack-glow-1" x={-400} y={100} w={1300} h={800} />
+        <Glow name="stack-glow-2" x={700} y={220} w={1100} h={800} />
+      </GlowLayer>
 
-      <div className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="flex flex-col items-center gap-14">
-          <SectionTitle
-            label={t.stack.eyebrow}
-            title={t.stack.title}
-            highlight={t.stack.highlight}
-            description={t.stack.description}
-          />
+      <div className="pb-24 pt-20 lg:pb-40 lg:pt-[140px]">
+        <div className="mx-auto max-w-[1440px] px-5 lg:px-20">
+          <SectionHeading title={t.stack.title} description={t.stack.description} />
+        </div>
 
-          <div className="w-full flex flex-wrap justify-center gap-3">
-            {techStack.map((tech, i) => {
-              const entry = iconMap[tech.name];
-              if (!entry) return null;
-              const Icon = entry.icon;
-              const color = theme === "light" && entry.colorLight ? entry.colorLight : entry.color;
-
-              return (
-                <motion.div
-                  key={tech.name}
-                  className="glass rounded-xl px-4 py-3 flex items-center gap-2.5"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-30px" }}
-                  transition={{ duration: 0.4, delay: i * 0.04 }}
-                >
-                  <div
-                    className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
-                    style={{ backgroundColor: `${color}18` }}
-                  >
-                    <Icon size={16} style={{ color }} />
+        {/* The strip is duplicated so the loop has no seam. */}
+        <div aria-hidden className="marquee-container mx-auto mt-14 flex h-24 max-w-[1440px] items-center overflow-hidden lg:mt-[88px]">
+          <div className="marquee-track flex w-max">
+            {[0, 1].map((copy) => (
+              <div key={copy} className="flex items-center gap-14 pr-14">
+                {marqueeStack.map((tech) => (
+                  <div key={tech.name} className="flex items-center gap-14">
+                    <div className="flex items-center gap-[18px]">
+                      <TechLogo name={tech.logo} size={44} />
+                      <span className="whitespace-nowrap text-4xl font-semibold tracking-[-0.03em] lg:text-[56px]">
+                        {tech.name}
+                      </span>
+                    </div>
+                    <span className="text-[28px] text-faint">✦</span>
                   </div>
-                  <h3 className="font-semibold text-zinc-900 dark:text-zinc-100 text-sm whitespace-nowrap">
-                    {tech.name}
-                  </h3>
-                </motion.div>
-              );
-            })}
+                ))}
+              </div>
+            ))}
           </div>
+        </div>
+
+        <div className="mx-auto mt-16 grid max-w-[1440px] grid-cols-2 gap-x-6 gap-y-10 px-5 lg:mt-[110px] lg:grid-cols-4 lg:gap-12 lg:px-20">
+          {groups.map((group, i) => (
+            <Reveal key={group} index={i} className="flex flex-col gap-[18px]">
+              <h3 className="text-[15px] font-medium text-muted">{t.stack.groups[group]}</h3>
+              <ul className="flex flex-col gap-[18px]">
+                {techStack[group].map((tech) => (
+                  <li key={tech.name} className="flex items-center gap-3 transition-transform duration-300 hover:translate-x-1">
+                    <TechLogo name={tech.logo} size={22} />
+                    <span className="text-base font-medium leading-[1.2] sm:text-[19px]">{tech.name}</span>
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
+          ))}
         </div>
       </div>
     </section>

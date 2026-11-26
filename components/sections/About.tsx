@@ -1,76 +1,78 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { GraduationCap } from "lucide-react";
+import Glow, { GlowLayer } from "@/components/ui/Glow";
+import Icon from "@/components/ui/Icon";
+import Reveal from "@/components/ui/Reveal";
 import { useLanguage } from "@/lib/language-context";
 
 export default function About() {
   const { t } = useLanguage();
 
+  const facts = [
+    {
+      title: t.about.eduName,
+      detail: t.about.eduDegree,
+      box: "bg-[#f3f4f6]",
+      icon: (
+        <span className="relative block size-12 overflow-hidden">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/figma/logo-ufro.png"
+            alt=""
+            className="absolute left-[-31.97%] top-0 h-[138.11%] w-[163.11%] max-w-none"
+          />
+        </span>
+      ),
+    },
+    {
+      title: t.about.city,
+      detail: t.about.cityDesc,
+      box: "border border-[#2dd4bf]/35 bg-[#2dd4bf]/15 text-[#2dd4bf]",
+      icon: <Icon name="map-pin" size={22} />,
+    },
+    {
+      title: t.about.open,
+      detail: t.about.openDesc,
+      box: "border border-[#30d158]/35 bg-[#30d158]/15 text-[#30d158]",
+      icon: <Icon name="linkedin" size={22} />,
+    },
+  ];
+
   return (
-    <section id="about" className="pt-24 sm:pt-32 pb-16 sm:pb-20">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6">
-        <motion.div
-          className="flex flex-col gap-10"
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.6 }}
-        >
-          {/* Header */}
-          <div>
-            <p className="text-xs font-semibold tracking-widest text-blue-600 dark:text-blue-400 uppercase mb-4">
-              {t.about.eyebrow}
-            </p>
-            <h2 className="text-3xl sm:text-4xl font-bold text-zinc-900 dark:text-zinc-50 leading-tight">
-              {t.about.title} <span className="gradient-text">{t.about.highlight}</span>
-            </h2>
-          </div>
+    <section id="about" className="relative">
+      <GlowLayer>
+        <Glow name="about-glow-1" x={640} y={-60} w={980} />
+        <Glow name="about-glow-2" x={890} y={320} w={740} />
+      </GlowLayer>
 
-          {/* Bio */}
-          <div className="space-y-4 text-zinc-600 dark:text-zinc-400 leading-relaxed text-[15px]">
-            <p>
-              {t.about.bio1.map((segment, i) =>
-                segment.strong ? (
-                  <span key={i} className="text-zinc-900 dark:text-zinc-200 font-medium">
-                    {segment.text}
-                  </span>
-                ) : (
-                  <span key={i}>{segment.text}</span>
-                )
-              )}
+      <div className="mx-auto max-w-[1440px] px-5 py-24 lg:px-20 lg:py-40">
+        <div className="flex max-w-[1040px] flex-col gap-12">
+          <Reveal>
+            <h2 className="text-[15px] font-medium text-muted">{t.about.eyebrow}</h2>
+          </Reveal>
+          <Reveal index={1}>
+            <p className="text-[28px] font-medium leading-[1.26] tracking-[-0.03em] text-faint sm:text-4xl lg:text-[46px] lg:leading-[58px]">
+              {t.about.statement.map((segment, i) => (
+                <span key={i} className={segment.strong ? "text-strong" : undefined}>
+                  {segment.text}
+                </span>
+              ))}
             </p>
-            <p>
-              {t.about.bio2.map((segment, i) =>
-                segment.strong ? (
-                  <span key={i} className="text-zinc-900 dark:text-zinc-200 font-medium">
-                    {segment.text}
-                  </span>
-                ) : (
-                  <span key={i}>{segment.text}</span>
-                )
-              )}
-            </p>
-          </div>
-
-          {/* Education */}
-          <div className="pt-2 border-t border-zinc-200 dark:border-zinc-800/60">
-            <div className="flex items-center justify-between gap-4 pt-6">
-              <div className="flex items-center gap-4">
-                <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center flex-shrink-0">
-                  <GraduationCap size={16} className="text-blue-600 dark:text-blue-400" />
+          </Reveal>
+          <div className="flex flex-col gap-6 md:flex-row md:flex-wrap md:gap-12">
+            {facts.map((fact, i) => (
+              <Reveal key={fact.title} index={i + 2} className="flex items-center gap-4">
+                <div className={`flex size-14 shrink-0 items-center justify-center overflow-hidden rounded-2xl ${fact.box}`}>
+                  {fact.icon}
                 </div>
-                <div>
-                  <p className="font-semibold text-zinc-900 dark:text-zinc-100">{t.about.eduName}</p>
-                  <p className="text-sm text-zinc-500">{t.about.eduDegree}</p>
+                <div className="flex flex-col gap-0.5 leading-[1.25]">
+                  <p className="text-[17px] font-medium">{fact.title}</p>
+                  <p className="text-[15px] text-muted">{fact.detail}</p>
                 </div>
-              </div>
-              <span className="flex-shrink-0 px-2.5 py-1 rounded-full text-[10px] font-medium bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20">
-                {t.about.eduBadge}
-              </span>
-            </div>
+              </Reveal>
+            ))}
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

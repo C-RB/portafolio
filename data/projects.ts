@@ -1,14 +1,3 @@
-import {
-  Soup,
-  ShieldCheck,
-  BookOpen,
-  HeartPulse,
-  Stethoscope,
-  type LucideIcon,
-} from "lucide-react";
-
-export type ProjectAccent = "emerald" | "indigo" | "purple" | "orange" | "cyan" | "rose";
-
 export type LocalizedText = {
   es: string;
   en: string;
@@ -30,9 +19,8 @@ export type Project = {
   repoUrl: string;
   images: string[];
   preview?: ProjectPreview;
-  icon: LucideIcon;
-  accent: ProjectAccent;
-  featured?: boolean;
+  /** Panel gradient, from top to bottom. */
+  colors: [string, string];
 };
 
 export const projects: Project[] = [
@@ -48,8 +36,8 @@ export const projects: Project[] = [
       en: "Educational SaaS platform designed for healthcare students and professionals in Chile. It helps prepare for the EUNACOM exam through interactive mock exams, smart flashcards (Active Recall), and analytical dashboards. Features an admin panel for mass content generation, a payment gateway via MercadoPago, and a robust authentication system.",
     },
     problem: {
-      es: "El estudio para el examen EUNACOM requiere retener una gran cantidad de conocimiento clínico en poco tiempo. EunacomIA resuelve esto enfocándose en optimizar el tiempo a través del análisis de datos, simulacros y técnicas de memoria activa.",
-      en: "Studying for the EUNACOM exam requires retaining a large amount of clinical knowledge in a short time. EunacomIA solves this by focusing on optimizing time through data analysis, mock exams, and active recall techniques.",
+      es: "Estudiar para el EUNACOM exige retener muchísimo en poco tiempo. EunacomIA lo resuelve con un tutor de IA que guía y optimiza cada sesión de estudio.",
+      en: "Studying for the EUNACOM means retaining a huge amount in little time. EunacomIA solves it with an AI tutor that guides and optimizes every study session.",
     },
     stack: [
       "React 19",
@@ -62,7 +50,7 @@ export const projects: Project[] = [
       "MercadoPago",
       "AWS S3"
     ],
-    category: { es: "SaaS / Educación", en: "SaaS / Education" },
+    category: { es: "SaaS · Educación", en: "SaaS · Education" },
     demoUrl: "#",
     repoUrl: "#",
     images: [
@@ -77,9 +65,7 @@ export const projects: Project[] = [
       "/images/projects/eunacomia/eunacomia_10.png",
     ],
     preview: { type: "web", image: "/images/projects/eunacomia/eunacomia_1.png" },
-    icon: Stethoscope,
-    accent: "cyan",
-    featured: true,
+    colors: ["#2563eb", "#07123a"],
   },
   {
     id: "sobracero",
@@ -93,8 +79,8 @@ export const projects: Project[] = [
       en: "Web platform built with a team of 3 that connects restaurants and stores with food surplus to receiving social organizations in real time, enabling reservation, pickup, and traceability of each donation. I implemented the GitLab CI/CD pipeline with automated deployment to a VPS and AWS EC2.",
     },
     problem: {
-      es: "Restaurantes y comercios generan excedentes alimentarios que muchas veces no llegan a tiempo a organizaciones sociales por falta de un canal directo y trazable. SobraCero conecta ambas partes en tiempo real y da seguimiento a cada donación.",
-      en: "Restaurants and stores generate food surplus that often doesn't reach social organizations in time due to the lack of a direct, traceable channel. SobraCero connects both sides in real time and tracks every donation.",
+      es: "Restaurantes y comercios botan alimentos que organizaciones sociales necesitan. SobraCero los conecta en tiempo real con un canal directo y trazable.",
+      en: "Restaurants and stores throw away food that social organizations need. SobraCero connects them in real time through a direct, traceable channel.",
     },
     stack: [
       "Spring Boot",
@@ -106,7 +92,7 @@ export const projects: Project[] = [
       "AWS EC2",
       "MinIO",
     ],
-    category: { es: "Impacto Social", en: "Social Impact" },
+    category: { es: "Impacto social", en: "Social Impact" },
     demoUrl: "#",
     repoUrl: "#",
     images: [
@@ -116,9 +102,7 @@ export const projects: Project[] = [
       "/images/projects/sobracero/4.png",
     ],
     preview: { type: "web", image: "/images/projects/sobracero/1.png" },
-    icon: Soup,
-    accent: "emerald",
-    featured: true,
+    colors: ["#16a34a", "#03200f"],
   },
   {
     id: "bilup",
@@ -132,17 +116,15 @@ export const projects: Project[] = [
       en: "Backend system built with a clean, modular architecture, aimed at platforms that require robust authentication, role-based access control, session handling, and API-level security.",
     },
     problem: {
-      es: "La mayoría de los proyectos acumulan deuda técnica desde el backend. Bilup propone una base sólida, escalable y segura que puede servir como núcleo de múltiples productos.",
-      en: "Most projects accumulate technical debt starting from the backend. Bilup proposes a solid, scalable, and secure foundation that can serve as the core of multiple products.",
+      es: "La deuda técnica suele nacer en el backend. Bilup es una base modular y segura, con autenticación robusta y roles, que sirve como núcleo de varios productos.",
+      en: "Technical debt usually starts in the backend. Bilup is a modular, secure foundation with robust authentication and roles that powers several products.",
     },
     stack: ["NestJS", "Node.js", "PostgreSQL", "JWT", "Docker", "REST API"],
-    category: { es: "Backend / Arquitectura", en: "Backend / Architecture" },
+    category: { es: "Backend · Arquitectura", en: "Backend · Architecture" },
     demoUrl: "#",
     repoUrl: "https://github.com/C-RB",
     images: [],
-    icon: ShieldCheck,
-    accent: "indigo",
-    featured: true,
+    colors: ["#7c3aed", "#160733"],
   },
   {
     id: "lexpa",
@@ -156,11 +138,11 @@ export const projects: Project[] = [
       en: "Personal full-stack project: a mobile app (iOS/Android/Web) that helps Spanish speakers improve their English reading comprehension through short texts, comprehension questions, and vocabulary with spaced repetition (SRS). I built both the React Native frontend and the NestJS/PostgreSQL REST backend.",
     },
     problem: {
-      es: "Muchos hispanohablantes entienden inglés escrito de forma pasiva pero no practican comprensión lectora de manera estructurada. Lexpa entrena esa habilidad con textos cortos, verificación de lectura y vocabulario que se repasa con repetición espaciada.",
-      en: "Many Spanish speakers understand written English passively but never practice reading comprehension in a structured way. Lexpa trains that skill with short texts, reading checks, and vocabulary reviewed through spaced repetition.",
+      es: "Muchos hispanohablantes leen inglés de forma pasiva pero nunca practican. Lexpa entrena la comprensión lectora con textos cortos y práctica guiada.",
+      en: "Many Spanish speakers read English passively but never practice. Lexpa trains reading comprehension with short texts and guided practice.",
     },
     stack: ["React Native", "Expo", "TypeScript", "NestJS", "Prisma", "PostgreSQL", "JWT"],
-    category: { es: "Mobile / Educación", en: "Mobile / Education" },
+    category: { es: "Mobile · Educación", en: "Mobile · Education" },
     demoUrl: "#",
     repoUrl: "#",
     images: [
@@ -182,8 +164,7 @@ export const projects: Project[] = [
         "/images/projects/lexpa/3.png",
       ],
     },
-    icon: BookOpen,
-    accent: "orange",
+    colors: ["#f97316", "#2e0e04"],
   },
   {
     id: "activamente",
@@ -197,11 +178,11 @@ export const projects: Project[] = [
       en: "Full-stack project: a mobile app that enables connection and monitoring between healthcare specialists and their patients. It manages clinical records, tracks progress metrics, issues early alerts, and provides detailed session tracking. I built both the React Native mobile frontend and the FastAPI/Python REST backend.",
     },
     problem: {
-      es: "Los especialistas de la salud suelen perder continuidad en el seguimiento de sus pacientes entre sesiones. ActivaMente centraliza fichas clínicas, métricas y alertas tempranas en una sola plataforma conectada.",
-      en: "Healthcare specialists often lose continuity when tracking patients between sessions. ActivaMente centralizes clinical records, metrics, and early alerts in a single connected platform.",
+      es: "Los especialistas pierden continuidad entre sesiones. ActivaMente centraliza fichas clínicas, métricas y alertas tempranas en una sola app.",
+      en: "Specialists lose continuity between sessions. ActivaMente centralizes clinical records, metrics, and early alerts in a single app.",
     },
     stack: ["React Native", "Expo", "TypeScript", "FastAPI", "Python", "SQLAlchemy", "PostgreSQL"],
-    category: { es: "Mobile / Salud", en: "Mobile / Healthcare" },
+    category: { es: "Mobile · Salud", en: "Mobile · Healthcare" },
     demoUrl: "#",
     repoUrl: "#",
     images: [
@@ -223,7 +204,6 @@ export const projects: Project[] = [
         "/images/projects/activamente/3.png",
       ],
     },
-    icon: HeartPulse,
-    accent: "rose",
+    colors: ["#14b8a6", "#032421"],
   },
 ];
