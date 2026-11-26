@@ -12,7 +12,7 @@ export default function About() {
     {
       title: t.about.eduName,
       detail: t.about.eduDegree,
-      box: "bg-[#f3f4f6]",
+      box: "lift bg-white dark:bg-[#f3f4f6]",
       icon: (
         <span className="relative block size-12 overflow-hidden">
           {/* eslint-disable-next-line @next/next/no-img-element */}

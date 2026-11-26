@@ -42,21 +42,18 @@ export default function Orbit() {
         {CHIPS.map(({ logo, glow: [gx, gy, gs], chip: [x, y, s], icon }) => (
           <div key={logo}>
             {/* The exported glow bleeds 38.89% past its node on every side. */}
-            <Layer src={`glow-${logo}.svg`} left={gx - gs * 0.3889} top={gy - gs * 0.3889} size={gs * 1.7778} />
+            <Layer src={`glow-${logo}.svg`} left={gx - gs * 0.3889} top={gy - gs * 0.3889} size={gs * 1.7778} className="opacity-35 dark:opacity-100" />
             <div
-              className="orbit-counter-spin absolute flex items-center justify-center rounded-full border border-white/20 bg-[#0a0a0c]/85 shadow-[0_12px_30px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(255,255,255,0.07)]"
+              className="orbit-counter-spin absolute flex items-center justify-center rounded-full border border-black/[0.06] bg-white shadow-[0_10px_24px_-6px_rgba(0,0,0,0.18)] dark:border-white/20 dark:bg-[#0a0a0c]/85 dark:shadow-[0_12px_30px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(255,255,255,0.07)]"
               style={{ left: x, top: y, width: s, height: s }}
             >
-              {/* Chips stay dark in both themes, so the logo is never inverted. */}
-              <div className="dark contents">
-                <TechLogo name={logo} size={icon} />
-              </div>
+              <TechLogo name={logo} size={icon} />
             </div>
           </div>
         ))}
       </div>
       <Layer src="glow-core.svg" left={220} top={220} size={340} />
-      <div className="absolute left-[326px] top-[326px] flex size-[128px] items-center justify-center rounded-full border border-line-strong bg-card shadow-[inset_0_1px_0_rgba(255,255,255,0.07)] backdrop-blur-md">
+      <div className="absolute left-[326px] top-[326px] flex size-[128px] items-center justify-center rounded-full border border-line-strong bg-card shadow-[0_12px_30px_-10px_rgba(0,0,0,0.15)] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.07)] backdrop-blur-md">
         <span className="title-gradient text-4xl font-semibold tracking-[-0.04em]">CR</span>
       </div>
     </div>

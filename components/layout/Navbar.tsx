@@ -10,7 +10,7 @@ import { useTheme } from "@/lib/theme-context";
 const SECTIONS = ["hero", "about", "stack", "projects", "contact"] as const;
 
 const roundButton =
-  "relative after:absolute after:-inset-[5px] flex size-[34px] items-center justify-center rounded-full border border-line-strong bg-card backdrop-blur-md text-muted hover:text-strong transition active:scale-95 cursor-pointer";
+  "lift relative after:absolute after:-inset-[5px] flex size-[34px] items-center justify-center rounded-full border border-line-strong bg-card backdrop-blur-md text-muted hover:text-strong transition active:scale-95 cursor-pointer";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -55,15 +55,8 @@ export default function Navbar() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
       >
-        <nav className="mx-auto flex max-w-[1440px] items-center justify-between px-5 lg:px-20">
-          <button type="button" onClick={() => handleNavClick("hero")} className="relative flex items-center gap-3 after:absolute after:-inset-y-[5px] after:inset-x-0 cursor-pointer">
-            <span className="flex size-[34px] items-center justify-center rounded-full bg-gradient-to-b from-[var(--title-from)] to-muted text-xs font-bold text-background">
-              CR
-            </span>
-            <span className="whitespace-nowrap text-[15px] font-semibold tracking-[-0.01em]">Camilo Rojas</span>
-          </button>
-
-          <ul className="hidden lg:flex items-center gap-0.5 rounded-full border border-line-strong bg-card p-[5px] backdrop-blur-md">
+        <nav className="relative mx-auto flex max-w-[1440px] items-center justify-end px-5 lg:justify-center lg:px-20">
+          <ul className="lift hidden lg:flex items-center gap-0.5 rounded-full border border-line-strong bg-card p-[5px] backdrop-blur-md">
             {navLinks.map((link) => {
               const isActive = activeSection === link.id;
               return (
@@ -88,7 +81,7 @@ export default function Navbar() {
             })}
           </ul>
 
-          <div className="flex items-center gap-3 sm:gap-5">
+          <div className="flex items-center gap-3 sm:gap-5 lg:absolute lg:right-20">
             <span className="hidden sm:flex items-center gap-2 font-mono text-xs uppercase tracking-[0.04em] text-muted">
               <span className="size-[7px] rounded-full bg-[#30d158] shadow-[0_0_10px_2px_rgba(48,209,88,0.6)]" />
               {t.nav.available}

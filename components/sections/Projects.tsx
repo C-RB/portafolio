@@ -56,7 +56,7 @@ function ProjectPanel({ project, onOpen }: { project: Project; onOpen: () => voi
   return (
     <article
       onClick={onOpen}
-      className="group relative overflow-hidden rounded-[28px] border border-white/35 text-white transition-transform duration-300 hover:-translate-y-1 motion-reduce:transform-none lg:rounded-[40px] cursor-pointer"
+      className="group relative overflow-hidden rounded-[28px] border border-white/35 text-white shadow-[0_24px_50px_-24px_rgba(0,0,0,0.35)] dark:shadow-none transition-transform duration-300 hover:-translate-y-1 motion-reduce:transform-none lg:rounded-[40px] cursor-pointer"
       style={{ background: `linear-gradient(to bottom, ${from}, ${to})` }}
     >
       {/* Desktop: the design canvas, scaled to the panel width */}

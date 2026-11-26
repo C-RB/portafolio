@@ -92,7 +92,7 @@ export default function Contact() {
             {t.contact.title}
           </h2>
           <div className="flex max-w-[340px] flex-col gap-5 lg:pb-6">
-            <p className="flex items-center gap-2.5 text-sm font-medium text-[#30d158]">
+            <p className="flex items-center gap-2.5 text-sm font-medium text-[#1d7f36] dark:text-[#30d158]">
               <span className="relative flex size-2">
                 <span className="absolute inset-0 animate-ping rounded-full bg-[#30d158] opacity-60 motion-reduce:animate-none" />
                 <span className="relative size-2 rounded-full bg-[#30d158] shadow-[0_0_12px_3px_rgba(48,209,88,0.5)]" />
@@ -114,7 +114,7 @@ export default function Contact() {
                 href={link.href}
                 target={link.href.startsWith("http") ? "_blank" : undefined}
                 rel="noopener noreferrer"
-                className="group flex items-center gap-4 rounded-[18px] border border-line bg-card py-3.5 pl-3.5 pr-[18px] transition-all duration-300 hover:-translate-y-0.5 hover:border-line-strong"
+                className="lift group flex items-center gap-4 rounded-[18px] border border-line bg-card py-3.5 pl-3.5 pr-[18px] transition-all duration-300 hover:-translate-y-0.5 hover:border-line-strong"
               >
                 <span className={`flex size-11 shrink-0 items-center justify-center rounded-xl ${link.tone}`}>
                   <Icon name={link.icon} />
@@ -138,7 +138,7 @@ export default function Contact() {
           </Reveal>
 
           <Reveal index={2} className="min-w-0 flex-1">
-            <div className="rounded-[28px] border border-line bg-card p-6 backdrop-blur-md sm:p-9">
+            <div className="lift rounded-[28px] border border-line bg-card p-6 backdrop-blur-md sm:p-9">
               {sent ? (
                 <motion.div
                   className="flex min-h-[420px] flex-col items-center justify-center gap-4 text-center"
